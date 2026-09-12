@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprende Español — منصة تعلم الإسبانية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#1F5F8B;--azul-dark:#143F5C;--saffron:#F6B221;--terra:#C4552D;--sand:#FAF6EE;
+--ink:#22303C;--ok:#3E8E5A;--card:#FFFFFF;--line:#E5DCC9}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Alexandria',sans-serif;background:var(--sand);color:var(--ink);min-height:100vh}
+.es{direction:ltr;display:inline-block;unicode-bidi:isolate}
+.zellige{height:14px;background:repeating-linear-gradient(90deg,var(--azul) 0 28px,var(--saffron) 28px 42px,var(--terra) 42px 56px,var(--azul-dark) 56px 84px)}
+header{background:var(--azul-dark);color:#fff;padding:22px 20px 18px;text-align:center;position:relative;overflow:hidden}
+header::before{content:"✦";position:absolute;font-size:180px;opacity:.06;top:-40px;right:5%;color:var(--saffron)}
+header h1{font-weight:800;font-size:clamp(20px,4vw,32px)}
+header h1 .es{color:var(--saffron)}
+header .tag{font-weight:300;opacity:.85;margin-top:4px;font-size:13px}
+/* شريط الخبرة */
+.xp-wrap{max-width:520px;margin:12px auto 0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:8px 14px}
+.xp-top{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600}
+.xp-top .lvl-name{color:var(--saffron)}
+.xp-bar{height:8px;background:rgba(255,255,255,.15);border-radius:6px;margin-top:6px;overflow:hidden}
+.xp-fill{height:100%;background:linear-gradient(90deg,var(--saffron),#FFD870);width:0%;transition:width .5s;border-radius:6px}
+.voice-bar{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.voice-bar button,.voice-bar select{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);color:#fff;padding:7px 14px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:13px;transition:.2s}
+.voice-bar button.active{background:var(--saffron);color:var(--azul-dark);border-color:var(--saffron);font-weight:600}
+.hint-line{font-size:11px;opacity:.72;margin-top:8px;font-weight:300;line-height:1.9}
+nav{display:flex;gap:6px;padding:12px;overflow-x:auto;background:var(--card);border-bottom:2px solid var(--line);position:sticky;top:0;z-index:50}
+nav button{flex-shrink:0;background:none;border:2px solid transparent;padding:9px 16px;border-radius:24px;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink);transition:.2s}
+nav button:hover{background:var(--sand)}
+nav button.active{background:var(--azul);color:#fff}
+main{max-width:980px;margin:0 auto;padding:24px 16px 80px}
+section{display:none;animation:fade .3s}
+section.show{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h2{font-size:22px;font-weight:800;color:var(--azul-dark);margin-bottom:4px}
+.sub{font-size:13px;font-weight:300;color:#6b7a87;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;cursor:pointer;transition:.15s;position:relative}
+.tile:hover{border-color:var(--azul);transform:translateY(-2px);box-shadow:0 4px 14px rgba(31,95,139,.12)}
+.tile .big{font-size:30px;font-weight:800;color:var(--azul)}
+.tile .name{font-size:13px;color:var(--terra);font-weight:600;margin-top:2px}
+.tile .ar{font-size:12px;font-weight:300;color:#6b7a87;margin-top:3px}
+.tile .spk{position:absolute;top:8px;left:8px;font-size:13px;opacity:.45}
+.row-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 16px;display:flex;align-items:center;gap:12px;margin-bottom:9px;cursor:pointer;transition:.15s}
+.row-card:hover{border-color:var(--azul);box-shadow:0 3px 10px rgba(31,95,139,.1)}
+.row-card .spk-btn{width:38px;height:38px;border-radius:50%;background:var(--azul);color:#fff;border:none;cursor:pointer;font-size:16px;flex-shrink:0;transition:.2s}
+.row-card .spk-btn:hover{background:var(--terra)}
+.row-card .txt{flex:1}
+.row-card .es{font-weight:600;font-size:16px;color:var(--azul-dark)}
+.row-card .pron{font-size:12px;color:var(--terra);font-weight:300;margin-inline-start:6px}
+.row-card .ar{font-size:13px;color:#5a6a77;font-weight:300}
+.cat-head{font-size:15px;font-weight:800;color:var(--terra);margin:22px 0 10px;padding-bottom:5px;border-bottom:2px dashed var(--line)}
+.note{background:#FFF6DF;border:1px solid var(--saffron);border-radius:12px;padding:12px 16px;font-size:13px;font-weight:300;margin-bottom:18px;line-height:1.8}
+.note b{font-weight:800;color:var(--terra)}
+/* القواعد */
+.lvl-pick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.lvl-pick button{padding:8px 18px;border-radius:20px;border:2px solid var(--line);background:var(--card);cursor:pointer;font-family:inherit;font-weight:800;font-size:14px}
+.lvl-pick button.active{background:var(--terra);border-color:var(--terra);color:#fff}
+.gram-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:14px}
+.gram-card h3{color:var(--azul-dark);font-size:17px;margin-bottom:6px}
+.gram-card .badge{display:inline-block;background:var(--saffron);color:var(--azul-dark);font-size:11px;font-weight:800;padding:2px 10px;border-radius:12px;margin-inline-start:8px}
+.gram-card .rule{font-size:14px;font-weight:300;line-height:2;color:#40505d;margin-bottom:12px}
+.gram-ex{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;cursor:pointer;transition:.15s}
+.gram-ex:hover{background:var(--sand)}
+.gram-ex .es{font-weight:600;color:var(--azul);font-size:15px}
+.gram-ex .pron{font-size:12px;color:var(--terra);font-weight:300}
+.gram-ex .ar{font-size:13px;font-weight:300;color:#5a6a77;margin-inline-start:auto}
+/* الأفعال */
+.conj-wrap{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:16px}
+.conj-pick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.conj-pick button{padding:8px 14px;border-radius:20px;border:2px solid var(--line);background:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:13.5px}
+.conj-pick button.active{background:var(--saffron);border-color:var(--saffron);color:var(--azul-dark)}
+table.conj{width:100%;border-collapse:collapse}
+table.conj td{padding:10px 8px;border-bottom:1px solid var(--line);font-size:15px}
+table.conj td.pr{color:#6b7a87;font-weight:300;width:30%}
+table.conj td.form{font-weight:800;color:var(--azul);cursor:pointer}
+table.conj td.form:hover{color:var(--terra)}
+table.conj td.hint{font-size:14px;color:var(--terra);font-weight:600;width:26%}
+/* البطاقات */
+.flash-zone{max-width:460px;margin:0 auto;text-align:center}
+.flash-card{background:var(--card);border:2px solid var(--azul);border-radius:20px;min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:28px;cursor:pointer;box-shadow:0 8px 24px rgba(31,95,139,.14);transition:.2s}
+.flash-card:hover{transform:scale(1.015)}
+.flash-card .q{font-size:30px;font-weight:800;color:var(--azul-dark)}
+.flash-card .a{font-size:20px;color:var(--terra);font-weight:600}
+.flash-card .tip{font-size:12px;color:#8a97a3;font-weight:300}
+.flash-btns{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.flash-btns button{padding:10px 20px;border-radius:24px;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px;transition:.2s}
+.b-know{background:var(--ok);color:#fff}.b-again{background:var(--terra);color:#fff}
+.b-flip{background:var(--azul);color:#fff}.b-spk{background:var(--saffron);color:var(--azul-dark)}
+.flash-stats{margin-top:14px;font-size:13px;color:#6b7a87;font-weight:300}
+/* الاختبار والألعاب */
+.quiz-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;max-width:580px;margin:0 auto 20px}
+.quiz-q{font-size:21px;font-weight:800;color:var(--azul-dark);text-align:center;margin-bottom:18px}
+.quiz-opts{display:grid;gap:10px}
+.quiz-opts button{padding:13px;border-radius:12px;border:2px solid var(--line);background:var(--sand);cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;transition:.15s;text-align:center}
+.quiz-opts button:hover{border-color:var(--azul)}
+.quiz-opts button.good{background:#E3F2E8;border-color:var(--ok);color:var(--ok)}
+.quiz-opts button.bad{background:#FBE9E4;border-color:var(--terra);color:var(--terra)}
+.quiz-score{text-align:center;margin-top:16px;font-weight:600;color:var(--azul)}
+.game-tabs{display:flex;gap:8px;margin-bottom:18px;justify-content:center}
+.game-tabs button{padding:9px 22px;border-radius:22px;border:2px solid var(--line);background:var(--card);cursor:pointer;font-family:inherit;font-weight:800;font-size:14px}
+.game-tabs button.active{background:var(--azul);border-color:var(--azul);color:#fff}
+.streak{text-align:center;font-size:14px;font-weight:600;color:var(--terra);margin-bottom:10px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:560px;margin:0 auto}
+.match-grid button{padding:14px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);cursor:pointer;font-family:inherit;font-size:14.5px;font-weight:600;transition:.15s}
+.match-grid button.sel{border-color:var(--saffron);background:#FFF6DF}
+.match-grid button.done{background:#E3F2E8;border-color:var(--ok);color:var(--ok);cursor:default}
+.match-grid button.shake{animation:shake .3s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* الإملاء */
+.dict-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;max-width:600px;margin:0 auto}
+.dict-input{width:100%;direction:ltr;text-align:left;font-family:inherit;font-size:17px;padding:13px;border:2px solid var(--line);border-radius:12px;margin:14px 0}
+.dict-input:focus{outline:none;border-color:var(--azul)}
+.dict-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.dict-btns button{padding:10px 22px;border-radius:22px;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:14px}
+.dict-res{margin-top:14px;text-align:center;font-size:15px;font-weight:600;min-height:26px}
+.dict-ans{margin-top:6px;font-size:16px;color:var(--azul-dark)}
+/* القصص */
+.story-levels{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.story-levels button{padding:8px 16px;border-radius:20px;border:2px solid var(--line);background:var(--card);cursor:pointer;font-family:inherit;font-weight:600;font-size:13px}
+.story-levels button.active{background:var(--terra);border-color:var(--terra);color:#fff}
+.story{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.story h3{color:var(--terra);font-size:18px;margin-bottom:2px}
+.story .lvl{display:inline-block;background:var(--saffron);color:var(--azul-dark);font-size:11px;font-weight:800;padding:3px 10px;border-radius:12px;margin-bottom:14px}
+.sent{padding:10px 12px;border-radius:10px;margin-bottom:6px;cursor:pointer;transition:.15s;border-right:4px solid transparent}
+.sent:hover{background:var(--sand);border-right-color:var(--saffron)}
+.sent .es{font-size:16px;font-weight:600;color:var(--azul-dark);display:block;direction:ltr;text-align:left}
+.sent .ar{font-size:13px;font-weight:300;color:#5a6a77;margin-top:4px;display:none}
+.story.show-ar .sent .ar{display:block}
+.para{padding:14px 16px;border-radius:12px;margin-bottom:10px;cursor:pointer;transition:.15s;border-right:4px solid transparent}
+.para:hover{background:var(--sand);border-right-color:var(--saffron)}
+.para .es{direction:ltr;text-align:left;font-size:16.5px;font-weight:400;line-height:2;color:var(--ink)}
+.para .es::first-letter{font-size:1.6em;font-weight:800;color:var(--terra)}
+.para .ar{direction:rtl;text-align:right;font-size:14px;font-weight:300;line-height:2;color:#5a6a77;margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);display:none}
+.story.show-ar .para .ar{display:block}
+.story-tools{display:flex;gap:10px;margin:14px 0;flex-wrap:wrap}
+.story-tools button{padding:8px 18px;border-radius:20px;border:none;cursor:pointer;font-family:inherit;font-weight:600;font-size:13px}
+.t-play{background:var(--azul);color:#fff}.t-ar{background:var(--saffron);color:var(--azul-dark)}.t-stop{background:var(--terra);color:#fff}
+.sq-box{background:var(--sand);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.sq-q{font-weight:800;color:var(--azul-dark);font-size:15px;cursor:pointer;margin-bottom:10px}
+.sq-qa{font-size:12px;font-weight:300;color:#6b7a87;margin-top:3px}
+.sq-opts{display:grid;gap:8px}
+.sq-opts button{padding:11px;border-radius:10px;border:2px solid var(--line);background:var(--card);cursor:pointer;font-family:inherit;font-size:14px;font-weight:600;transition:.15s}
+.sq-opts button.good{background:#E3F2E8;border-color:var(--ok);color:var(--ok)}
+.sq-opts button.bad{background:#FBE9E4;border-color:var(--terra);color:var(--terra)}
+.sq-result{margin-top:8px;font-size:13px;font-weight:600;min-height:18px}
+.adv-choices{display:grid;gap:10px;margin-top:14px}
+.adv-btn{padding:14px 18px;border-radius:14px;border:2px solid var(--azul);background:var(--card);cursor:pointer;font-family:inherit;font-size:15px;font-weight:600;transition:.15s;text-align:center}
+.adv-btn:hover{background:var(--azul);color:#fff;transform:translateY(-1px)}
+.adv-btn .es{direction:ltr;display:block;font-size:16px}
+.adv-btn .adv-ar{display:block;font-size:12px;font-weight:300;opacity:.75;margin-top:4px}
+.adv-end{margin-top:18px;text-align:center;font-size:22px;font-weight:800;color:var(--terra);background:#FFF6DF;border:2px solid var(--saffron);border-radius:14px;padding:16px}
+.adv-step{margin-inline-start:auto;font-size:12px;font-weight:600;color:var(--azul);background:var(--sand);padding:6px 14px;border-radius:16px;align-self:center}
+/* toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--azul-dark);color:#fff;padding:12px 26px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;transition:.35s;z-index:99;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:600px){.grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr))}main{padding:16px 10px 70px}.match-grid{gap:8px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="zellige"></div>
+<header>
+  <h1>Aprende Español · <span class="es">منصة تعلم الإسبانية</span></h1>
+  <p class="tag">الإسبانية اللاتينية · من الصفر إلى الاحتراف — تعلّم، العب، واكسب النقاط</p>
+  <div class="xp-wrap">
+    <div class="xp-top"><span class="lvl-name" id="lvlName">🧳 Turista — سائح</span><span id="xpText">0 XP</span></div>
+    <div class="xp-bar"><div class="xp-fill" id="xpFill"></div></div>
+  </div>
+  <div class="voice-bar">
+    <select id="voiceSel" onchange="chooseVoice(this.value)" style="max-width:270px"><option>⏳ جارٍ تحميل الأصوات…</option></select>
+    <button id="modeOnline" class="active" onclick="setMode('online',this)">🌐 صوت طبيعي (إنترنت)</button>
+    <button id="modeDevice" onclick="setMode('device',this)">📱 صوت الجهاز</button>
+    <button id="rateSlow" onclick="setRate(0.62,this)">🐢 بطيء</button>
+    <button id="rateNorm" class="active" onclick="setRate(0.88,this)">▶ طبيعي</button>
+  </div>
+  <div class="voice-bar" id="quickVoices" style="margin-top:6px"></div>
+  <p class="hint-line">💡 «🌐 صوت طبيعي»: صوت Google السحابي (امرأة، لاتيني) · الأزرار السريعة تختار أفضل صوت 👨/👩 من جهازك<br>⭐ لأصوات Natural ١٠٠٪ بكل اللهجات: افتح الملف بمتصفح <b style="color:var(--saffron)">Microsoft Edge</b> · نقاط XP تُحتسب داخل الجلسة الحالية</p>
+</header>
+
+<nav id="nav">
+  <button class="active" data-t="letters">🔤 الحروف</button>
+  <button data-t="numbers">🔢 الأرقام</button>
+  <button data-t="vocab">📚 المفردات</button>
+  <button data-t="grammar">📖 القواعد</button>
+  <button data-t="verbs">⚙️ الأفعال</button>
+  <button data-t="phrases">💬 العبارات</button>
+  <button data-t="flash">🃏 البطاقات</button>
+  <button data-t="dictation">✍️ الإملاء</button>
+  <button data-t="games">🎯 الألعاب</button>
+  <button data-t="quiz">✅ اختبار</button>
+  <button data-t="stories">📕 القصص</button>
+</nav>
+
+<main>
+<section id="letters" class="show">
+  <h2>الحروف والنطق</h2>
+  <p class="sub">اضغط أي حرف لسماعه — الأحمر يعني نطقاً مختلفاً عن المتوقع</p>
+  <div class="note"><b>قواعد ذهبية (اللهجة اللاتينية):</b> H صامتة دائماً · J تُنطق خاء · Ñ تُنطق نْي · LL تُنطق ي · V قريبة من الباء · RR متدحرجة · Z و C(قبل e,i) تُنطق <b>سيناً</b> في أمريكا اللاتينية</div>
+  <div class="grid" id="lettersGrid"></div>
+</section>
+
+<section id="numbers">
+  <h2>الأرقام</h2>
+  <p class="sub">احفظ ١-١٥ كما هي لأنها شاذة — والباقي أنماط قابلة للتركيب</p>
+  <div class="cat-head">١ — ١٥ (تُحفظ كما هي)</div><div class="grid" id="num1"></div>
+  <div class="cat-head">١٦ — ٢١ (النمط يبدأ)</div><div class="grid" id="num1b"></div>
+  <div class="cat-head">العشرات والمئات والآلاف</div><div class="grid" id="num2"></div>
+</section>
+
+<section id="vocab">
+  <h2>المفردات الأساسية</h2>
+  <p class="sub">١٧ فئة تغطي كل احتياجات الحياة والسفر — اضغط للاستماع، اللفظ يُولَّد تلقائياً</p>
+  <div id="vocabZone"></div>
+</section>
+
+<section id="grammar">
+  <h2>دليل القواعد الكامل</h2>
+  <p class="sub">١٩ درساً متدرجاً من A1 حتى C1 — كل مثال قابل للنقر والاستماع</p>
+  <div class="lvl-pick" id="gramLvls"></div>
+  <div id="gramZone"></div>
+</section>
+
+<section id="verbs">
+  <h2>مصرّف الأفعال التفاعلي</h2>
+  <p class="sub">١٣ فعلاً أساسياً × ٥ أزمنة — اضغط أي تصريف لسماعه</p>
+  <div class="conj-wrap">
+    <div class="conj-pick" id="verbPick"></div>
+    <div class="conj-pick" id="tensePick"></div>
+    <table class="conj"><tbody id="conjBody"></tbody></table>
+  </div>
+  <div class="note"><b>نصيحة الاسترجاع النشط:</b> غطِّ عمودَي التصريف واللفظ، انطق من ذاكرتك، ثم اكشف وتحقق بالصوت.</div>
+</section>
+
+<section id="phrases">
+  <h2>عبارات جاهزة</h2>
+  <p class="sub">جُمل كاملة للاستخدام الفوري — استمع وكرّر بصوتك</p>
+  <div id="phraseZone"></div>
+</section>
+
+<section id="flash">
+  <h2>بطاقات الاسترجاع النشط</h2>
+  <p class="sub">حاول التذكّر قبل القلب — «أعرفها» تُبعدها (+5 XP)، «أعدها» تُرجعها قريباً</p>
+  <div class="flash-zone">
+    <div class="flash-card" id="flashCard" onclick="flipCard()">
+      <div class="q" id="fcQ"></div><div class="a" id="fcA" style="display:none"></div>
+      <div class="tip" id="fcTip">اضغط البطاقة لقلبها</div>
+    </div>
+    <div class="flash-btns">
+      <button class="b-spk" onclick="speakCard(event)">🔊 استمع</button>
+      <button class="b-flip" onclick="flipCard()">اقلب</button>
+      <button class="b-again" onclick="rateCard(false)">🔁 أعدها</button>
+      <button class="b-know" onclick="rateCard(true)">✓ أعرفها</button>
+    </div>
+    <div class="flash-stats" id="fcStats"></div>
+  </div>
+</section>
+
+<section id="dictation">
+  <h2>وضع الإملاء — Dictado</h2>
+  <p class="sub">استمع واكتب ما سمعت — أقوى تمرين للأذن (+15 XP لكل إجابة صحيحة)</p>
+  <div class="dict-box">
+    <div style="text-align:center;font-size:15px;font-weight:600;color:var(--azul-dark)" id="dictHint">اضغط 🔊 لسماع الجملة ثم اكتبها</div>
+    <input class="dict-input" id="dictInput" placeholder="Escribe aquí lo que escuchas..." autocomplete="off">
+    <div class="dict-btns">
+      <button class="b-spk" onclick="playDict()">🔊 استمع</button>
+      <button class="b-flip" onclick="checkDict()">✓ تحقق</button>
+      <button class="b-again" onclick="nextDict()">التالي ←</button>
+    </div>
+    <div class="dict-res" id="dictRes"></div><div class="dict-ans es" id="dictAns" style="text-align:center"></div>
+    <div class="flash-stats" id="dictStats" style="text-align:center"></div>
+  </div>
+</section>
+
+<section id="games">
+  <h2>الألعاب التعليمية</h2>
+  <p class="sub">تعلّم وأنت تلعب — كل إجابة صحيحة تمنحك XP</p>
+  <div class="game-tabs">
+    <button class="active" onclick="showGame('vgame',this)">⚡ سباق التصريف</button>
+    <button onclick="showGame('mgame',this)">🧩 المطابقة</button>
+  </div>
+  <div id="vgame">
+    <div class="streak" id="vStreak">🔥 السلسلة: 0 · الأفضل: 0</div>
+    <div class="quiz-box"><div class="quiz-q" id="vgQ"></div><div class="quiz-opts" id="vgOpts"></div></div>
+  </div>
+  <div id="mgame" style="display:none">
+    <div class="streak" id="mInfo"></div>
+    <div class="match-grid" id="mGrid"></div>
+    <div style="text-align:center;margin-top:14px"><button class="b-flip" style="padding:10px 24px;border:none;border-radius:22px;cursor:pointer;font-family:inherit;font-weight:600" onclick="newMatch()">🔄 جولة جديدة</button></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>اختبار المفردات</h2>
+  <p class="sub">١٠ أسئلة عشوائية بالصوت — (+10 XP للإجابة الصحيحة)</p>
+  <div class="quiz-box"><div class="quiz-q" id="quizQ"></div><div class="quiz-opts" id="quizOpts"></div><div class="quiz-score" id="quizScore"></div></div>
+</section>
+
+<section id="stories">
+  <h2>قصص عالمية متدرّجة</h2>
+  <p class="sub">حكايات خالدة من الصفر إلى الاحتراف + مغامرة تفاعلية بقراراتك</p>
+  <div class="story-levels" id="storyLevels"></div>
+  <div class="story" id="storyBox"></div>
+</section>
+</main>
+<div class="zellige"></div>
+<div id="toast"></div>
+<script>
+
+/* ================= نظام النقاط والمستويات ================= */
+let XP=0;
+const LEVELS=[[0,'🧳 Turista — سائح'],[100,'✈️ Viajero — مسافر'],[250,'🤝 Amigo — صديق'],[500,'💬 Hablante — متحدث'],[900,'🎓 Experto — خبير'],[1500,'👑 Maestro — معلّم']];
+function lvlOf(x){let L=LEVELS[0],N=null;for(let i=0;i<LEVELS.length;i++){if(x>=LEVELS[i][0])L=LEVELS[i];else{N=LEVELS[i];break}}return[L,N]}
+function addXP(n){
+  const before=lvlOf(XP)[0][1]; XP+=n;
+  const [L,N]=lvlOf(XP);
+  document.getElementById('xpText').textContent=XP+' XP';
+  document.getElementById('lvlName').textContent=L[1];
+  const base=L[0], top=N?N[0]:L[0]*1.4+200;
+  document.getElementById('xpFill').style.width=Math.min(100,((XP-base)/(top-base))*100)+'%';
+  if(L[1]!==before)toast('🎉 مستوى جديد: '+L[1]);
+}
+let toastT=null;
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2400);
+}
+/* ================= اللفظ العربي التلقائي (لاتيني) ================= */
+function translit(t){
+  t=(t||'').toLowerCase().replace(/[¿?¡!.,;:«»"()—]/g,'').trim();
+  const acc={'á':'a','é':'e','í':'i','ó':'o','ú':'u','ü':'u'};
+  t=t.replace(/[áéíóúü]/g,m=>acc[m]);
+  const words=t.split(/\s+/).map(w=>{
+    w=w.replace(/ch/g,'CH').replace(/ll/g,'Y').replace(/rr/g,'RR')
+       .replace(/qu(?=[ei])/g,'K').replace(/gu(?=[ei])/g,'G').replace(/ñ/g,'NY')
+       .replace(/c(?=[ei])/g,'S').replace(/z/g,'S').replace(/j/g,'J')
+       .replace(/g(?=[ei])/g,'J').replace(/h/g,'').replace(/[vb]/g,'B')
+       .replace(/c|k|q/g,'K').replace(/g/g,'G').replace(/y$/,'i').replace(/y/g,'Y').replace(/x/g,'KS').replace(/w/g,'W');
+    let out='',first=true;
+    const tokens=w.match(/CH|RR|NY|KS|[A-Z]|[a-z]/g)||[];
+    for(const c of tokens){
+      const V={a:first?'أ':'ا',e:first?'إي':'ي',i:first?'إي':'ي',o:first?'أو':'و',u:first?'أو':'و'};
+      const C={CH:'تش',Y:'ي',RR:'رّ',K:'ك',NY:'نْي',S:'س',J:'خ',B:'ب',G:'غ',KS:'كس',W:'و',d:'د',t:'ت',s:'س',m:'م',n:'ن',l:'ل',r:'ر',f:'ف',p:'ب'};
+      out+=V[c]!==undefined?V[c]:(C[c]!==undefined?C[c]:'');
+      first=false;
+    }
+    return out;
+  });
+  return words.join(' ');
+}
+let RATE=0.88, esVoice=null, esVoices=[];
+const LATAM_ORDER=['es-MX','es-US','es-419','es-AR','es-CO','es-CL','es-PE','es-VE'];
+const FEMALE_NAMES=['paulina','mónica','monica','sabina','angélica','angelica','francisca','soledad','camila','lupe','penélope','penelope','marisol','juana','isabela','dalia','renata','larissa','andrea','elena','carmen','lucía','lucia','valentina','ximena','salomé','salome','paloma','catalina','yolanda','esperanza','marina','sofía','sofia','helena','laura','pilar','rosa','female','mujer'];
+const MALE_NAMES=['jorge','diego','juan','carlos','raúl','raul','andrés','andres','felipe','miguel','pablo','emilio','gerardo','alonso','mario','luciano','darío','dario','tomás','tomas','enrique','pedro','álvaro','alvaro','male','hombre'];
+function genderOf(v){
+  const n=v.name.toLowerCase();
+  if(FEMALE_NAMES.some(f=>n.includes(f)))return '👩 امرأة';
+  if(MALE_NAMES.some(m=>n.includes(m)))return '👨 رجل';
+  return '🔊';
+}
+function regionOf(lang){
+  const map={'es-MX':'🇲🇽 المكسيك','es-US':'🇺🇸 لاتيني (أمريكا)','es-419':'🌎 أمريكا اللاتينية','es-AR':'🇦🇷 الأرجنتين','es-CO':'🇨🇴 كولومبيا','es-CL':'🇨🇱 تشيلي','es-PE':'🇵🇪 بيرو','es-VE':'🇻🇪 فنزويلا','es-ES':'🇪🇸 إسبانيا'};
+  return map[lang]||('🌎 '+lang);
+}
+function scoreVoice(v){
+  let sc=0;
+  const i=LATAM_ORDER.indexOf(v.lang); sc+= i>=0 ? (100-i*5) : (v.lang.startsWith('es')?20:0);
+  const n=v.name.toLowerCase();
+  // أصوات معروفة بجودة عالية (Google/Microsoft Neural/Apple Enhanced)
+  if(n.includes('google'))sc+=30;
+  if(n.includes('natural')||n.includes('neural')||n.includes('enhanced')||n.includes('premium'))sc+=40;
+  if(v.lang==='es-ES')sc-=15;
+  return sc;
+}
+function populateVoices(){
+  const vs=speechSynthesis.getVoices().filter(v=>v.lang.toLowerCase().startsWith('es'));
+  if(!vs.length)return;
+  esVoices=vs.sort((a,b)=>scoreVoice(b)-scoreVoice(a));
+  esVoice=esVoices[0];
+  const sel=document.getElementById('voiceSel');
+  sel.innerHTML=esVoices.map((v,i)=>
+    `<option value="${i}" ${i===0?'selected':''}>${genderOf(v)} ${v.name.replace(/Microsoft |Google |Apple /,'')} — ${regionOf(v.lang)}</option>`).join('');
+}
+function genderCode(v){const g=genderOf(v);return g.includes('👩')?'f':g.includes('👨')?'m':'?';}
+const SLOTS=[
+ {label:'👨 رجل لاتيني',dial:'latam',g:'m'},
+ {label:'👩 امرأة لاتينية',dial:'latam',g:'f'},
+ {label:'👨 رجل إسباني',dial:'spain',g:'m'},
+ {label:'👩 امرأة إسبانية',dial:'spain',g:'f'}
+];
+let QP=[]; // خطة كل زر: {mode:'device',vi,pitch} أو {mode:'online'}
+function bestIn(pool,g){
+  const rank=a=>a.sort((x,y)=>scoreVoice(y.v)-scoreVoice(x.v));
+  const exact=rank(pool.filter(o=>genderCode(o.v)===g));
+  if(exact.length)return{mode:'device',vi:exact[0].i,pitch:1,note:''};
+  const unk=rank(pool.filter(o=>genderCode(o.v)==='?'));
+  if(unk.length)return{mode:'device',vi:unk[0].i,pitch:g==='m'?0.7:1.15,note:' (طبقة معدّلة)'};
+  const any=rank([...pool]);
+  if(any.length)return{mode:'device',vi:any[0].i,pitch:g==='m'?0.62:1.25,note:' (طبقة معدّلة)'};
+  return null;
+}
+function buildQuickVoices(){
+  const zone=document.getElementById('quickVoices'); if(!zone)return;
+  const all=esVoices.map((v,i)=>({v,i}));
+  const latam=all.filter(o=>o.v.lang!=='es-ES');
+  const spain=all.filter(o=>o.v.lang==='es-ES');
+  QP=SLOTS.map(sl=>{
+    const pool=(sl.dial==='spain'?spain:latam);
+    let plan=bestIn(pool.length?pool:all, sl.g);
+    // المرأة اللاتينية: إن لم يوجد صوت أنثوي حقيقي، الصوت السحابي أفضل من التعديل
+    if(sl.dial==='latam'&&sl.g==='f'&&(!plan||plan.pitch!==1))
+      plan={mode:'online',note:' (سحابي طبيعي)'};
+    // الرجل اللاتيني بلا أصوات إطلاقاً: عدّل طبقة الصوت السحابي غير ممكن — استخدم أي صوت
+    if(!plan&&all.length)plan=bestIn(all,sl.g);
+    return plan;
+  });
+  zone.innerHTML=SLOTS.map((sl,si)=>{
+    const plan=QP[si];
+    if(!plan) return `<button disabled style="opacity:.4" title="لا توجد أصوات إسبانية في جهازك">${sl.label} ✗</button>`;
+    const tip=plan.mode==='online'?'صوت Google السحابي الطبيعي':(esVoices[plan.vi]?esVoices[plan.vi].name:'')+ (plan.note||'');
+    return `<button id="qv${si}" onclick="quickPick(${si})" title="${tip}">${sl.label}</button>`;
+  }).join('');
+}
+function quickPick(si){
+  const plan=QP[si]; if(!plan)return;
+  if(plan.mode==='online'){
+    PITCH=1; setMode('online',null);
+    document.getElementById('modeOnline').classList.add('active');
+    document.getElementById('modeDevice').classList.remove('active');
+  } else {
+    esVoice=esVoices[plan.vi]; PITCH=plan.pitch;
+    setMode('device',null);
+    document.getElementById('modeDevice').classList.add('active');
+    document.getElementById('modeOnline').classList.remove('active');
+    const sel=document.getElementById('voiceSel'); if(sel)sel.value=plan.vi;
+  }
+  SLOTS.forEach((_,i)=>{const b=document.getElementById('qv'+i); if(b)b.classList.toggle('active',i===si)});
+  say('Hola, ¿cómo estás? Mucho gusto. Vamos a aprender español.');
+}
+const _origPopulate=populateVoices;
+populateVoices=function(){_origPopulate();buildQuickVoices();};
+speechSynthesis.onvoiceschanged=populateVoices; populateVoices();
+setTimeout(populateVoices,600); // بعض المتصفحات تتأخر بتحميل الأصوات
+function chooseVoice(i){esVoice=esVoices[+i]; PITCH=1; setMode('device',document.getElementById('modeDevice')); say('Hola, ¿cómo estás? Vamos a aprender español.')}
+
+/* ===== المحرك المزدوج: سحابي طبيعي + جهاز ===== */
+let MODE='online', currentAudio=null, PITCH=1;
+function setMode(m,btn){
+  MODE=m; stopAll();
+  document.getElementById('modeOnline').classList.toggle('active',m==='online');
+  document.getElementById('modeDevice').classList.toggle('active',m==='device');
+}
+function stopAll(){
+  speechSynthesis.cancel();
+  if(currentAudio){currentAudio.pause();currentAudio.onended=null;currentAudio=null;}
+}
+function speakDevice(text,rate){
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=esVoice?esVoice.lang:'es-MX';
+  if(esVoice)u.voice=esVoice;
+  u.rate=rate||RATE; u.pitch=PITCH;
+  speechSynthesis.speak(u);
+  return u;
+}
+function say(text,rate){
+  stopAll(); addXP(1);
+  if(MODE==='online'){
+    const a=new Audio('https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=es&q='+encodeURIComponent(text));
+    a.playbackRate=(rate||RATE)<0.8?0.72:1;
+    currentAudio=a;
+    let endFn=null, fellBack=false;
+    const fallback=()=>{ if(fellBack)return; fellBack=true;
+      const u=speakDevice(text,rate); if(endFn)u.onend=endFn; };
+    a.onerror=fallback;
+    a.onended=()=>{ if(endFn)endFn(); };
+    a.play().catch(fallback);
+    return { set onend(fn){ endFn=fn; } };
+  }
+  return speakDevice(text,rate);
+}
+/* تشغيل نص طويل: يُقسَّم لجُمل قصيرة تُقرأ تباعاً (المحرك السحابي يقبل ~200 حرف) */
+function splitChunks(text){
+  const parts=text.split(/(?<=[.!?…»:])\s+/).filter(Boolean);
+  const out=[];let cur='';
+  for(const pt of parts){
+    if((cur+' '+pt).trim().length>170){ if(cur)out.push(cur.trim()); cur=pt; }
+    else cur=(cur?cur+' ':'')+pt;
+  }
+  if(cur.trim())out.push(cur.trim());
+  const final=[];
+  for(const c of out){
+    if(c.length<=185){final.push(c);continue}
+    let buf='';
+    for(const g of c.split(/,\s*/)){
+      if((buf+', '+g).length>170){ if(buf)final.push(buf); buf=g; }
+      else buf=buf?buf+', '+g:g;
+    }
+    if(buf)final.push(buf);
+  }
+  return final;
+}
+function sayLong(text){
+  const chunks=splitChunks(text); let i=0, endFn=null;
+  const handle={ set onend(fn){endFn=fn} };
+  function nxt(){
+    if(i>=chunks.length){ if(endFn)endFn(); return; }
+    const u=say(chunks[i]); i++;
+    u.onend=nxt;
+  }
+  nxt();
+  return handle;
+}
+function setRate(r,btn){RATE=r;document.querySelectorAll('.voice-bar button').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+function testVoice(){say('¡Hola! Bienvenido a tu curso de español latinoamericano.')}
+
+
+/* ================= التبويبات ================= */
+document.getElementById('nav').addEventListener('click',e=>{
+  if(e.target.tagName!=='BUTTON')return;
+  stopAll();
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');
+  document.querySelectorAll('main section').forEach(x=>x.classList.remove('show'));
+  document.getElementById(e.target.dataset.t).classList.add('show');
+  if(e.target.dataset.t==='dictation')setTimeout(()=>document.getElementById('dictInput').focus(),200);
+});
+/* ================= الحروف ================= */
+const LETTERS=[['A','آ','a'],['B','بيه','be'],['C','سيه','ce'],['D','ديه','de'],['E','إيه','e'],['F','إيفي','efe'],['G','خيه','ge'],['H','آتشي (صامت)','hache'],['I','إي','i'],['J','خوتا','jota'],['K','كا','ka'],['L','إيلي','ele'],['LL','إييه = ي','elle'],['M','إيمي','eme'],['N','إيني','ene'],['Ñ','إينيي = نْي','eñe'],['O','أو','o'],['P','بيه','pe'],['Q','كو','cu'],['R','إيري','erre'],['RR','متدحرجة','erre doble'],['S','إيسي','ese'],['T','تيه','te'],['U','أو','u'],['V','أوبي = ب','uve'],['W','أوبي دوبلي','uve doble'],['X','إيكيس','equis'],['Y','ييه','ye'],['Z','سيتا','zeta']];
+const SPECIAL=['C','H','J','LL','Ñ','RR','V','Z','G'];
+document.getElementById('lettersGrid').innerHTML=LETTERS.map(([l,ar,name])=>
+ `<div class="tile" onclick="say('${name}')"><span class="spk">🔊</span>
+   <div class="big" style="${SPECIAL.includes(l)?'color:var(--terra)':''}">${l}</div>
+   <div class="name">${name}</div><div class="ar">${ar}</div></div>`).join('');
+/* ================= الأرقام ================= */
+const N1=[[1,'uno'],[2,'dos'],[3,'tres'],[4,'cuatro'],[5,'cinco'],[6,'seis'],[7,'siete'],[8,'ocho'],[9,'nueve'],[10,'diez'],[11,'once'],[12,'doce'],[13,'trece'],[14,'catorce'],[15,'quince']];
+const N1B=[[16,'dieciséis'],[17,'diecisiete'],[18,'dieciocho'],[19,'diecinueve'],[20,'veinte'],[21,'veintiuno']];
+const N2=[[30,'treinta'],[40,'cuarenta'],[50,'cincuenta'],[60,'sesenta'],[70,'setenta'],[80,'ochenta'],[90,'noventa'],[100,'cien'],[200,'doscientos'],[500,'quinientos'],[1000,'mil'],[1000000,'un millón']];
+const numTile=([n,es])=>`<div class="tile" onclick="say('${es}')"><span class="spk">🔊</span><div class="big">${n>=1000000?'1M':n}</div><div class="name">${es}</div><div class="ar">${translit(es)}</div></div>`;
+document.getElementById('num1').innerHTML=N1.map(numTile).join('');
+document.getElementById('num1b').innerHTML=N1B.map(numTile).join('');
+document.getElementById('num2').innerHTML=N2.map(numTile).join('');
+
+/* ================= المفردات (17 فئة) ================= */
+const VOCAB={
+ 'التحيات والأساسيات':[['Hola','مرحباً'],['Buenos días','صباح الخير'],['Buenas tardes','مساء الخير'],['Buenas noches','تصبح على خير'],['Adiós','وداعاً'],['Gracias','شكراً'],['Por favor','من فضلك'],['De nada','عفواً'],['Perdón','آسف'],['Vale','حسناً']],
+ 'المطار والفندق':[['el aeropuerto','المطار'],['el vuelo','الرحلة'],['la maleta','الحقيبة'],['el pasaporte','جواز السفر'],['la habitación','الغرفة'],['la llave','المفتاح'],['la reserva','الحجز'],['el desayuno','الفطور']],
+ 'المطعم والطعام':[['la carta','قائمة الطعام'],['la cuenta','الحساب'],['el agua','الماء'],['el café','القهوة'],['el pollo','الدجاج'],['la carne','اللحم'],['el pescado','السمك'],['el pan','الخبز'],['el arroz','الأرز'],['el jugo','العصير']],
+ 'التنقّل والاتجاهات':[['el tren','القطار'],['el autobús','الحافلة'],['el taxi','التاكسي'],['la estación','المحطة'],['a la derecha','إلى اليمين'],['a la izquierda','إلى اليسار'],['todo recto','مباشرة'],['la calle','الشارع']],
+ 'التسوّق والمال':[['la tienda','المتجر'],['el dinero','المال'],['la tarjeta','البطاقة'],['caro','غالٍ'],['barato','رخيص'],['el cambio','الباقي/الصرف'],['la talla','المقاس'],['el recibo','الإيصال']],
+ 'الطوارئ والصحة':[['ayuda','مساعدة/النجدة'],['el médico','الطبيب'],['la farmacia','الصيدلية'],['el hospital','المستشفى'],['la policía','الشرطة'],['Me duele','يؤلمني'],['la medicina','الدواء'],['la emergencia','الطوارئ']],
+ 'الأسرة والصفات':[['la familia','الأسرة'],['el padre','الأب'],['la madre','الأم'],['el hermano','الأخ'],['grande','كبير'],['pequeño','صغير'],['bonito','جميل'],['nuevo','جديد']],
+ 'الوقت والأيام':[['hoy','اليوم'],['mañana','غداً'],['ayer','أمس'],['ahora','الآن'],['siempre','دائماً'],['nunca','أبداً'],['la semana','الأسبوع'],['lunes','الإثنين'],['viernes','الجمعة'],['domingo','الأحد']],
+ 'الشهور':[['enero','يناير'],['febrero','فبراير'],['marzo','مارس'],['abril','أبريل'],['mayo','مايو'],['junio','يونيو'],['julio','يوليو'],['agosto','أغسطس'],['septiembre','سبتمبر'],['diciembre','ديسمبر']],
+ 'الطقس والفصول':[['Hace calor','الجو حار'],['Hace frío','الجو بارد'],['Llueve','تمطر'],['Hace sol','مشمس'],['el viento','الرياح'],['la primavera','الربيع'],['el verano','الصيف'],['el invierno','الشتاء']],
+ 'الجسم والصحة':[['la cabeza','الرأس'],['la mano','اليد'],['el ojo','العين'],['la boca','الفم'],['el estómago','المعدة'],['la espalda','الظهر'],['la fiebre','الحمّى'],['el dolor','الألم']],
+ 'المشاعر':[['feliz','سعيد'],['triste','حزين'],['cansado','متعب'],['enojado','غاضب'],['nervioso','متوتر'],['tranquilo','هادئ'],['emocionado','متحمس'],['aburrido','ملول']],
+ 'المهن':[['el médico','الطبيب'],['el ingeniero','المهندس'],['el profesor','المعلم'],['el estudiante','الطالب'],['el diseñador','المصمم'],['el cocinero','الطباخ'],['el conductor','السائق'],['el abogado','المحامي']],
+ 'البيت':[['la casa','البيت'],['la cocina','المطبخ'],['el cuarto','الغرفة'],['la puerta','الباب'],['la ventana','النافذة'],['la mesa','الطاولة'],['la silla','الكرسي'],['la cama','السرير']],
+ 'التقنية':[['el teléfono','الهاتف'],['la computadora','الحاسوب'],['el internet','الإنترنت'],['el correo','البريد'],['la foto','الصورة'],['la aplicación','التطبيق'],['la pantalla','الشاشة'],['el cargador','الشاحن']],
+ 'كلمات الربط':[['y','و'],['o','أو'],['pero','لكن'],['porque','لأن'],['entonces','إذاً'],['también','أيضاً'],['aunque','رغم أن'],['además','بالإضافة'],['sin embargo','ومع ذلك'],['por eso','لذلك']],
+ 'أفعال شائعة':[['necesitar','يحتاج'],['buscar','يبحث'],['encontrar','يجد'],['llegar','يصل'],['salir','يخرج'],['volver','يعود'],['ayudar','يساعد'],['comprar','يشتري'],['pagar','يدفع'],['entender','يفهم']]
+};
+function rowCard(es,ar){
+ const e=es.replace(/'/g,"\\'");
+ return `<div class="row-card" onclick="say('${e}')">
+   <button class="spk-btn" onclick="event.stopPropagation();say('${e}')">🔊</button>
+   <div class="txt"><span class="es">${es}</span><span class="pron">${translit(es)}</span><div class="ar">${ar}</div></div></div>`;
+}
+document.getElementById('vocabZone').innerHTML=Object.entries(VOCAB).map(([cat,items])=>
+ `<div class="cat-head">${cat}</div>`+items.map(([es,ar])=>rowCard(es,ar)).join('')).join('');
+
+/* ================= دليل القواعد (19 درساً) ================= */
+const GRAMMAR=[
+ {lv:'A1',t:'الجنس وأدوات التعريف',r:'كل اسم إسباني مذكر (el/un) أو مؤنث (la/una). غالباً: المنتهي بـ o مذكر وبـ a مؤنث.',ex:[['el libro','الكتاب'],['la casa','البيت'],['un amigo','صديق'],['una mesa','طاولة']]},
+ {lv:'A1',t:'الجمع',r:'أضف s بعد حرف علة، وes بعد حرف ساكن.',ex:[['libro → libros','كتاب → كتب'],['ciudad → ciudades','مدينة → مدن'],['el papel → los papeles','الورقة → الأوراق']]},
+ {lv:'A1',t:'Ser مقابل Estar',r:'ser للصفات الثابتة والهوية، وestar للمكان والحالة المؤقتة.',ex:[['Soy médico','أنا طبيب (مهنة ثابتة)'],['Estoy cansado','أنا متعب (حالة مؤقتة)'],['Es alto','هو طويل'],['Está aquí','هو هنا']]},
+ {lv:'A1',t:'المضارع المنتظم',r:'احذف النهاية (ar/er/ir) وأضف نهايات الضمير: ‪-o, -as/-es, -a/-e, -amos/-emos/-imos, -an/-en‬.',ex:[['hablo','أتحدث'],['comes','تأكل'],['vive','يعيش'],['trabajamos','نعمل']]},
+ {lv:'A1',t:'النفي والسؤال',r:'النفي: no قبل الفعل مباشرة. السؤال: علامتا ¿? حول الجملة.',ex:[['No hablo inglés','لا أتحدث الإنجليزية'],['¿Dónde vives?','أين تعيش؟'],['¿No tienes hambre?','ألستَ جائعاً؟']]},
+ {lv:'A2',t:'فعل Gustar (يعجب)',r:'يُصرَّف مع الشيء لا الشخص: me gusta لمفرد، me gustan لجمع.',ex:[['Me gusta el café','أحب القهوة'],['Me gustan los libros','أحب الكتب'],['¿Te gusta viajar?','هل تحب السفر؟']]},
+ {lv:'A2',t:'صفات الملكية',r:'mi/tu/su لا تتغير مع الجنس، وnuestro يتغير (nuestra).',ex:[['mi casa','بيتي'],['tus llaves','مفاتيحك'],['nuestra familia','أسرتنا'],['su coche','سيارته/سيارتها']]},
+ {lv:'A2',t:'الماضي التام Pretérito',r:'لحدث منتهٍ في وقت محدد: ‪-é/-í‬ للمتكلم.',ex:[['hablé','تحدثتُ'],['comí','أكلتُ'],['fui a Madrid','ذهبتُ إلى مدريد'],['tuve suerte','حالفني الحظ']]},
+ {lv:'A2',t:'المستقبل القريب Ir a',r:'ir المصرَّف + a + المصدر = سوف أفعل.',ex:[['Voy a viajar','سأسافر'],['Vamos a comer','سنأكل'],['¿Vas a venir?','هل ستأتي؟']]},
+ {lv:'A2',t:'المقارنة',r:'más...que (أكثر من)، menos...que (أقل من)، tan...como (مثل).',ex:[['más alto que','أطول من'],['menos caro que','أرخص من'],['tan grande como','بكِبَر'],['mejor / peor','أفضل / أسوأ']]},
+ {lv:'B1',t:'الماضيان معاً',r:'imperfecto للوصف والعادة (كان يفعل)، وpretérito للحدث المنتهي (فعل).',ex:[['Cuando era niño, vivía en Yeda','حين كنت طفلاً، كنت أعيش في جدة'],['Ayer comí paella','أمس أكلتُ الباييا'],['Llovía cuando llegué','كانت تمطر حين وصلت']]},
+ {lv:'B1',t:'الأفعال الانعكاسية',r:'الفعل يعود على الفاعل: me/te/se/nos + الفعل.',ex:[['Me levanto temprano','أنهض مبكراً'],['Se llama Karim','يُدعى كريم'],['Nos vamos mañana','نغادر غداً']]},
+ {lv:'B1',t:'ضمائر المفعول lo/la/le',r:'lo/la للمفعول المباشر، le للمفعول غير المباشر.',ex:[['Lo veo','أراه'],['La compro','أشتريها'],['Le doy el libro','أعطيه الكتاب']]},
+ {lv:'B1',t:'صيغة الأمر Imperativo',r:'الأمر لـtú: صيغة él في المضارع. النهي: no + subjuntivo.',ex:[['¡Habla!','تحدث!'],['¡Ven aquí!','تعال هنا!'],['No hables','لا تتحدث'],['Escúchame','اسمعني']]},
+ {lv:'B2',t:'المستقبل البسيط',r:'المصدر كاملاً + النهايات: ‪-é, -ás, -á, -emos, -án‬. بعض الأفعال جذعها شاذ.',ex:[['hablaré','سأتحدث'],['tendré tiempo','سيكون لدي وقت'],['será fácil','سيكون سهلاً']]},
+ {lv:'B2',t:'الشرطية Condicional',r:'للتهذيب والافتراض: المصدر + ‪-ía‬.',ex:[['Me gustaría un café','أودّ قهوة'],['¿Podrías ayudarme?','هلّا ساعدتني؟'],['Sería perfecto','سيكون مثالياً']]},
+ {lv:'B2',t:'Por مقابل Para',r:'por: السبب والمدة والوسيلة. para: الهدف والوجهة والمستفيد.',ex:[['Gracias por todo','شكراً على كل شيء'],['por la mañana','في الصباح'],['Es para ti','هذا لك'],['Estudio para aprender','أدرس لأتعلم']]},
+ {lv:'C1',t:'Subjuntivo الحاضر',r:'بعد أفعال الرغبة والشك والمشاعر: quiero que + subjuntivo.',ex:[['Quiero que vengas','أريدك أن تأتي'],['Espero que tengas suerte','أتمنى أن يحالفك الحظ'],['Es importante que estudies','من المهم أن تدرس'],['No creo que sea verdad','لا أظنه صحيحاً']]},
+ {lv:'C1',t:'جمل الشرط Si',r:'الحقيقي: si + مضارع → مستقبل. الافتراضي: si + subjuntivo ماضٍ → condicional.',ex:[['Si tengo tiempo, iré','إن كان لدي وقت سأذهب'],['Si tuviera dinero, viajaría','لو كان لدي مال لسافرت'],['Si pudiera, te ayudaría','لو استطعت لساعدتك']]}
+];
+let curGramLvl='A1';
+function renderGrammar(){
+ const lvls=['A1','A2','B1','B2','C1'];
+ document.getElementById('gramLvls').innerHTML=lvls.map(l=>
+  `<button class="${l===curGramLvl?'active':''}" onclick="curGramLvl='${l}';renderGrammar()">${l}</button>`).join('');
+ document.getElementById('gramZone').innerHTML=GRAMMAR.filter(g=>g.lv===curGramLvl).map(g=>
+  `<div class="gram-card"><h3>${g.t}<span class="badge">${g.lv}</span></h3>
+    <div class="rule">${g.r}</div>`+
+   g.ex.map(([es,ar])=>{const e=es.replace(/'/g,"\\'");
+    return `<div class="gram-ex" onclick="say('${e}')">🔊 <span class="es">${es}</span><span class="pron">${translit(es)}</span><span class="ar">${ar}</span></div>`}).join('')+
+  `</div>`).join('');
+}
+renderGrammar();
+
+/* ================= الأفعال: 13 فعلاً × 5 أزمنة ================= */
+const PRON=['yo','tú','él / ella','nosotros','ellos'];
+const PRON_AR=['أنا','أنتَ','هو / هي','نحن','هم'];
+const VERBS={
+'Ser (يكون-ثابت)':{pres:['soy','eres','es','somos','son'],past:['fui','fuiste','fue','fuimos','fueron'],imp:['era','eras','era','éramos','eran'],fut:['seré','serás','será','seremos','serán'],subj:['sea','seas','sea','seamos','sean']},
+'Estar (يكون-حالة)':{pres:['estoy','estás','está','estamos','están'],past:['estuve','estuviste','estuvo','estuvimos','estuvieron'],imp:['estaba','estabas','estaba','estábamos','estaban'],fut:['estaré','estarás','estará','estaremos','estarán'],subj:['esté','estés','esté','estemos','estén']},
+'Tener (يملك)':{pres:['tengo','tienes','tiene','tenemos','tienen'],past:['tuve','tuviste','tuvo','tuvimos','tuvieron'],imp:['tenía','tenías','tenía','teníamos','tenían'],fut:['tendré','tendrás','tendrá','tendremos','tendrán'],subj:['tenga','tengas','tenga','tengamos','tengan']},
+'Ir (يذهب)':{pres:['voy','vas','va','vamos','van'],past:['fui','fuiste','fue','fuimos','fueron'],imp:['iba','ibas','iba','íbamos','iban'],fut:['iré','irás','irá','iremos','irán'],subj:['vaya','vayas','vaya','vayamos','vayan']},
+'Hacer (يفعل)':{pres:['hago','haces','hace','hacemos','hacen'],past:['hice','hiciste','hizo','hicimos','hicieron'],imp:['hacía','hacías','hacía','hacíamos','hacían'],fut:['haré','harás','hará','haremos','harán'],subj:['haga','hagas','haga','hagamos','hagan']},
+'Decir (يقول)':{pres:['digo','dices','dice','decimos','dicen'],past:['dije','dijiste','dijo','dijimos','dijeron'],imp:['decía','decías','decía','decíamos','decían'],fut:['diré','dirás','dirá','diremos','dirán'],subj:['diga','digas','diga','digamos','digan']},
+'Poder (يستطيع)':{pres:['puedo','puedes','puede','podemos','pueden'],past:['pude','pudiste','pudo','pudimos','pudieron'],imp:['podía','podías','podía','podíamos','podían'],fut:['podré','podrás','podrá','podremos','podrán'],subj:['pueda','puedas','pueda','podamos','puedan']},
+'Querer (يريد)':{pres:['quiero','quieres','quiere','queremos','quieren'],past:['quise','quisiste','quiso','quisimos','quisieron'],imp:['quería','querías','quería','queríamos','querían'],fut:['querré','querrás','querrá','querremos','querrán'],subj:['quiera','quieras','quiera','queramos','quieran']},
+'Saber (يعرف)':{pres:['sé','sabes','sabe','sabemos','saben'],past:['supe','supiste','supo','supimos','supieron'],imp:['sabía','sabías','sabía','sabíamos','sabían'],fut:['sabré','sabrás','sabrá','sabremos','sabrán'],subj:['sepa','sepas','sepa','sepamos','sepan']},
+'Venir (يأتي)':{pres:['vengo','vienes','viene','venimos','vienen'],past:['vine','viniste','vino','vinimos','vinieron'],imp:['venía','venías','venía','veníamos','venían'],fut:['vendré','vendrás','vendrá','vendremos','vendrán'],subj:['venga','vengas','venga','vengamos','vengan']},
+'Hablar (يتحدث)':{pres:['hablo','hablas','habla','hablamos','hablan'],past:['hablé','hablaste','habló','hablamos','hablaron'],imp:['hablaba','hablabas','hablaba','hablábamos','hablaban'],fut:['hablaré','hablarás','hablará','hablaremos','hablarán'],subj:['hable','hables','hable','hablemos','hablen']},
+'Comer (يأكل)':{pres:['como','comes','come','comemos','comen'],past:['comí','comiste','comió','comimos','comieron'],imp:['comía','comías','comía','comíamos','comían'],fut:['comeré','comerás','comerá','comeremos','comerán'],subj:['coma','comas','coma','comamos','coman']},
+'Vivir (يعيش)':{pres:['vivo','vives','vive','vivimos','viven'],past:['viví','viviste','vivió','vivimos','vivieron'],imp:['vivía','vivías','vivía','vivíamos','vivían'],fut:['viviré','vivirás','vivirá','viviremos','vivirán'],subj:['viva','vivas','viva','vivamos','vivan']}
+};
+const TENSES={pres:'المضارع',past:'الماضي التام',imp:'الماضي الناقص',fut:'المستقبل',subj:'Subjuntivo'};
+let curVerb=Object.keys(VERBS)[0], curTense='pres';
+function renderVerbUI(){
+ document.getElementById('verbPick').innerHTML=Object.keys(VERBS).map(v=>
+  `<button class="${v===curVerb?'active':''}" onclick="curVerb='${v}';renderVerbUI()"><span class="es">${v.split(' ')[0]}</span> ${v.split(' ').slice(1).join(' ')}</button>`).join('');
+ document.getElementById('tensePick').innerHTML=Object.keys(TENSES).map(t=>
+  `<button class="${t===curTense?'active':''}" onclick="curTense='${t}';renderVerbUI()">${TENSES[t]}</button>`).join('');
+ const forms=VERBS[curVerb][curTense];
+ document.getElementById('conjBody').innerHTML=forms.map((f,i)=>
+  `<tr><td class="pr">${PRON_AR[i]} · <span class="es">${PRON[i]}</span></td>
+   <td class="form" onclick="say('${f}')"><span class="es">${f}</span> 🔊</td>
+   <td class="hint">🗣 ${translit(f)}</td></tr>`).join('');
+}
+renderVerbUI();
+
+/* ================= العبارات ================= */
+const PHRASES={
+ 'أسئلة النجاة (الأهم)':[['¿Dónde está el baño?','أين الحمّام؟'],['¿Cuánto cuesta?','كم السعر؟'],['No entiendo','لا أفهم'],['¿Puede hablar más despacio?','هل يمكنك التحدث ببطء؟'],['¿Puede ayudarme, por favor?','هل يمكنك مساعدتي من فضلك؟'],['¿Habla inglés?','هل تتحدث الإنجليزية؟']],
+ 'المطعم':[['La carta, por favor','قائمة الطعام من فضلك'],['Quiero pollo con arroz','أريد دجاجاً مع أرز'],['La cuenta, por favor','الحساب من فضلك'],['Está delicioso','إنه لذيذ'],['Sin cebolla, por favor','بدون بصل من فضلك'],['Soy alérgico a los frutos secos','لديّ حساسية من المكسرات']],
+ 'الفندق والمطار':[['Tengo una reserva','لديّ حجز'],['¿Incluye desayuno?','هل يشمل الفطور؟'],['¿A qué hora es el check-out?','متى موعد المغادرة؟'],['Perdí mi maleta','ضاعت حقيبتي'],['¿Dónde recojo el equipaje?','أين أستلم الأمتعة؟']],
+ 'التنقّل':[['Al aeropuerto, por favor','إلى المطار من فضلك'],['¿A qué hora sale el tren?','متى يغادر القطار؟'],['Un billete para Madrid','تذكرة إلى مدريد'],['Pare aquí, por favor','قف هنا من فضلك'],['¿Cómo llego al centro?','كيف أصل إلى المركز؟']],
+ 'التعارف والمجاملة':[['Me llamo Ahmad','اسمي أحمد'],['Soy de Arabia Saudí','أنا من السعودية'],['Encantado de conocerte','سعيد بلقائك'],['¿Qué me recomienda?','بماذا تنصحني؟'],['¡Qué bonito!','ما أجمله!']],
+ 'التعبير عن الرأي':[['Creo que sí','أعتقد ذلك'],['Me parece bien','يبدو لي جيداً'],['En mi opinión','برأيي'],['Estoy de acuerdo','أوافق'],['No estoy seguro','لست متأكداً'],['¿Qué piensas?','ما رأيك؟']]
+};
+document.getElementById('phraseZone').innerHTML=Object.entries(PHRASES).map(([cat,items])=>
+ `<div class="cat-head">${cat}</div>`+items.map(([es,ar])=>rowCard(es,ar)).join('')).join('');
+
+/* ================= البطاقات ================= */
+let deck=[],deckIdx=0,flipped=false,knownCount=0;
+function buildDeck(){
+ deck=[];
+ Object.values(VOCAB).forEach(cat=>cat.forEach(([es,ar])=>deck.push({es,ar})));
+ Object.values(PHRASES).forEach(cat=>cat.forEach(([es,ar])=>deck.push({es,ar})));
+ deck.sort(()=>Math.random()-0.5);deckIdx=0;knownCount=0;showCard();
+}
+function showCard(){
+ flipped=false;
+ if(deck.length===0){document.getElementById('fcQ').textContent='أنهيت كل البطاقات! 🎉';document.getElementById('fcA').style.display='none';updateStats();return}
+ const c=deck[deckIdx%deck.length];
+ document.getElementById('fcQ').innerHTML=`<span class="es">${c.es}</span>`;
+ const a=document.getElementById('fcA');a.textContent=c.ar;a.style.display='none';
+ document.getElementById('fcTip').textContent='حاول التذكّر ثم اضغط لقلبها';updateStats();
+}
+function flipCard(){
+ if(deck.length===0)return;flipped=!flipped;
+ document.getElementById('fcA').style.display=flipped?'block':'none';
+ document.getElementById('fcTip').textContent=flipped?'هل عرفتها؟':'حاول التذكّر ثم اضغط لقلبها';
+}
+function speakCard(e){e.stopPropagation();if(deck.length)say(deck[deckIdx%deck.length].es)}
+function rateCard(known){
+ if(deck.length===0)return;
+ if(known){deck.splice(deckIdx%deck.length,1);knownCount++;addXP(5)}
+ else{const c=deck.splice(deckIdx%deck.length,1)[0];deck.splice(Math.min(deck.length,deckIdx+3),0,c)}
+ showCard();
+}
+function updateStats(){document.getElementById('fcStats').textContent=`المتبقي: ${deck.length} بطاقة · أتقنتَ: ${knownCount}`}
+buildDeck();
+/* ================= اختبار المفردات ================= */
+let quizPool=[],quizIdx=0,quizScore=0,_quizAll=[];
+function buildQuiz(){
+ _quizAll=[];Object.values(VOCAB).forEach(c=>c.forEach(([es,ar])=>_quizAll.push({es,ar})));
+ _quizAll.sort(()=>Math.random()-0.5);quizPool=_quizAll.slice(0,10);quizIdx=0;quizScore=0;showQuiz();
+}
+function showQuiz(){
+ if(quizIdx>=quizPool.length){
+  document.getElementById('quizQ').textContent=`النتيجة: ${quizScore} / ${quizPool.length} ${quizScore>=8?'🏆 ممتاز!':quizScore>=6?'👍 جيد':'🔁 راجع وحاول'}`;
+  document.getElementById('quizOpts').innerHTML=`<button onclick="buildQuiz()">اختبار جديد</button>`;
+  document.getElementById('quizScore').textContent='';return}
+ const q=quizPool[quizIdx];
+ const wrong=_quizAll.filter(x=>x.es!==q.es).sort(()=>Math.random()-0.5).slice(0,3);
+ const opts=[q,...wrong].sort(()=>Math.random()-0.5);
+ document.getElementById('quizQ').innerHTML=`ما معنى: <span class="es" style="color:var(--terra)">${q.es}</span> 🔊`;
+ document.getElementById('quizQ').style.cursor='pointer';
+ document.getElementById('quizQ').onclick=()=>say(q.es);
+ say(q.es);
+ document.getElementById('quizOpts').innerHTML=opts.map(o=>`<button onclick="answerQuiz(this,${o.es===q.es})">${o.ar}</button>`).join('');
+ document.getElementById('quizScore').textContent=`سؤال ${quizIdx+1} من ${quizPool.length} · النقاط: ${quizScore}`;
+}
+function answerQuiz(btn,good){
+ btn.classList.add(good?'good':'bad');
+ if(good){quizScore++;addXP(10)}
+ document.querySelectorAll('#quizOpts button').forEach(b=>b.disabled=true);
+ setTimeout(()=>{quizIdx++;showQuiz()},900);
+}
+buildQuiz();
+
+/* ================= الإملاء ================= */
+let dictPool=[],dictCur=null,dictOK=0,dictTot=0;
+function buildDictPool(){
+ dictPool=[];
+ Object.values(PHRASES).forEach(c=>c.forEach(([es])=>{if(es.length<=42)dictPool.push(es)}));
+ Object.values(VOCAB).forEach(c=>c.forEach(([es])=>{if(es.length>=6&&es.length<=24)dictPool.push(es)}));
+ dictPool.sort(()=>Math.random()-0.5);
+}
+function nextDict(){
+ if(!dictPool.length)buildDictPool();
+ dictCur=dictPool.pop();
+ document.getElementById('dictInput').value='';
+ document.getElementById('dictRes').textContent='';
+ document.getElementById('dictAns').textContent='';
+ document.getElementById('dictHint').textContent='اضغط 🔊 لسماع الجملة ثم اكتبها';
+ document.getElementById('dictInput').focus();
+ playDict();
+}
+function playDict(){if(dictCur)say(dictCur)}
+function normEs(t){return (t||'').toLowerCase().replace(/[¿?¡!.,;:«»"']/g,'').replace(/[áéíóúü]/g,m=>({'á':'a','é':'e','í':'i','ó':'o','ú':'u','ü':'u'}[m])).replace(/\s+/g,' ').trim()}
+function checkDict(){
+ if(!dictCur)return;
+ dictTot++;
+ const ok=normEs(document.getElementById('dictInput').value)===normEs(dictCur);
+ const r=document.getElementById('dictRes');
+ if(ok){r.textContent='✓ ¡Perfecto! إجابة صحيحة (+15 XP)';r.style.color='var(--ok)';dictOK++;addXP(15);toast('✍️ إملاء صحيح!')}
+ else{r.textContent='✗ ليست تماماً — الإجابة الصحيحة:';r.style.color='var(--terra)';
+  document.getElementById('dictAns').textContent=dictCur}
+ document.getElementById('dictStats').textContent=`الصحيح: ${dictOK} من ${dictTot}`;
+}
+document.getElementById('dictInput').addEventListener('keydown',e=>{if(e.key==='Enter')checkDict()});
+buildDictPool();nextDict();
+/* ================= الألعاب ================= */
+function showGame(id,btn){
+ document.getElementById('vgame').style.display=id==='vgame'?'block':'none';
+ document.getElementById('mgame').style.display=id==='mgame'?'block':'none';
+ document.querySelectorAll('.game-tabs button').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ if(id==='mgame'&&!mPairs.length)newMatch();
+}
+/* سباق التصريف */
+let vStreak=0,vBest=0;
+function newVG(){
+ const vk=Object.keys(VERBS), v=vk[Math.floor(Math.random()*vk.length)];
+ const tk=Object.keys(TENSES), t=tk[Math.floor(Math.random()*tk.length)];
+ const pi=Math.floor(Math.random()*5);
+ const correct=VERBS[v][t][pi];
+ const pool=new Set();
+ while(pool.size<3){
+  const t2=tk[Math.floor(Math.random()*tk.length)], p2=Math.floor(Math.random()*5);
+  const f=VERBS[v][t2][p2]; if(f!==correct)pool.add(f);
+ }
+ const opts=[correct,...pool].sort(()=>Math.random()-0.5);
+ document.getElementById('vgQ').innerHTML=`<span class="es" style="color:var(--terra)">${v.split(' ')[0]}</span> · ${TENSES[t]} · <span class="es">${PRON[pi]}</span> (${PRON_AR[pi]})`;
+ document.getElementById('vgOpts').innerHTML=opts.map(o=>
+  `<button onclick="answerVG(this,${o===correct},'${correct}')"><span class="es">${o}</span></button>`).join('');
+}
+function answerVG(btn,good,correct){
+ document.querySelectorAll('#vgOpts button').forEach(b=>b.disabled=true);
+ if(good){btn.classList.add('good');vStreak++;vBest=Math.max(vBest,vStreak);addXP(8);say(correct)}
+ else{btn.classList.add('bad');vStreak=0;
+  document.querySelectorAll('#vgOpts button').forEach(b=>{if(b.textContent.trim()===correct)b.classList.add('good')})}
+ document.getElementById('vStreak').textContent=`🔥 السلسلة: ${vStreak} · الأفضل: ${vBest}`;
+ setTimeout(newVG,900);
+}
+newVG();
+/* لعبة المطابقة */
+let mPairs=[],mSelEs=null,mSelAr=null,mDone=0;
+function newMatch(){
+ const cats=Object.values(VOCAB);
+ const cat=cats[Math.floor(Math.random()*cats.length)];
+ mPairs=[...cat].sort(()=>Math.random()-0.5).slice(0,6);
+ mDone=0;mSelEs=null;mSelAr=null;
+ const esCol=[...mPairs].sort(()=>Math.random()-0.5);
+ const arCol=[...mPairs].sort(()=>Math.random()-0.5);
+ const g=document.getElementById('mGrid');
+ g.innerHTML='';
+ for(let i=0;i<6;i++){
+  g.innerHTML+=`<button class="es" data-k="${esCol[i][0]}" data-t="es" onclick="pickM(this)">${esCol[i][0]}</button>`;
+  g.innerHTML+=`<button data-k="${arCol[i][0]}" data-t="ar" onclick="pickM(this)">${arCol[i][1]}</button>`;
+ }
+ document.getElementById('mInfo').textContent='طابق الإسبانية (يسار الشاشة) مع العربية — 6 أزواج';
+}
+function pickM(btn){
+ if(btn.classList.contains('done'))return;
+ if(btn.dataset.t==='es'){if(mSelEs)mSelEs.classList.remove('sel');mSelEs=btn;btn.classList.add('sel');say(btn.dataset.k)}
+ else{if(mSelAr)mSelAr.classList.remove('sel');mSelAr=btn;btn.classList.add('sel')}
+ if(mSelEs&&mSelAr){
+  if(mSelEs.dataset.k===mSelAr.dataset.k){
+   mSelEs.classList.remove('sel');mSelAr.classList.remove('sel');
+   mSelEs.classList.add('done');mSelAr.classList.add('done');
+   mDone++;addXP(5);
+   if(mDone===6){addXP(20);toast('🧩 أكملت الجولة! +20 XP');document.getElementById('mInfo').textContent='🏆 جولة مكتملة — اضغط «جولة جديدة»'}
+  } else {
+   mSelEs.classList.add('shake');mSelAr.classList.add('shake');
+   const a=mSelEs,b=mSelAr;
+   setTimeout(()=>{a.classList.remove('sel','shake');b.classList.remove('sel','shake')},350);
+  }
+  mSelEs=null;mSelAr=null;
+ }
+}
+
+/* ===== بيانات القصص (محفوظة من النسخة السابقة) ===== */
+const STORIES=[
+ {lvl:'المستوى 0 — مبتدئ تماماً',title:'El león y el ratón — الأسد والفأر',
+  sents:[
+   ['El león duerme en el bosque.','ينام الأسد في الغابة.'],
+   ['Un ratón pequeño corre sobre su espalda.','يركض فأر صغير فوق ظهره.'],
+   ['El león despierta y atrapa al ratón.','يستيقظ الأسد ويمسك الفأر.'],
+   ['—¡Por favor, no me comas! —dice el ratón.','«أرجوك، لا تأكلني!» — يقول الفأر.'],
+   ['—Un día puedo ayudarte.','«يوماً ما أستطيع مساعدتك».'],
+   ['El león ríe, pero deja libre al ratón.','يضحك الأسد، لكنه يُطلق الفأر.'],
+   ['Un día, el león cae en una red de cazadores.','يوماً ما، يقع الأسد في شبكة صيادين.'],
+   ['El ratón escucha sus gritos y corre hacia él.','يسمع الفأر صراخه ويركض نحوه.'],
+   ['El ratón corta la red con sus dientes.','يقطع الفأر الشبكة بأسنانه.'],
+   ['El león está libre.','الأسد حرّ.'],
+   ['—Gracias, amigo pequeño —dice el león.','«شكراً يا صديقي الصغير» — يقول الأسد.'],
+   ['Los amigos pequeños pueden ser grandes amigos.','الأصدقاء الصغار قد يكونون أصدقاء عظماء.']]},
+ {lvl:'A1 — أساسي',title:'La tortuga y la liebre — السلحفاة والأرنب',
+  sents:[
+   ['La liebre es muy rápida y la tortuga es muy lenta.','الأرنب سريع جداً والسلحفاة بطيئة جداً.'],
+   ['La liebre siempre se ríe de la tortuga.','الأرنب يسخر دائماً من السلحفاة.'],
+   ['—¿Quieres una carrera? —pregunta la tortuga un día.','«أتريد سباقاً؟» — تسأل السلحفاة يوماً.'],
+   ['—¡Ja! Tú eres muy lenta —dice la liebre.','«ها! أنتِ بطيئة جداً» — يقول الأرنب.'],
+   ['La carrera empieza por la mañana.','يبدأ السباق في الصباح.'],
+   ['La liebre corre muy rápido.','يركض الأرنب بسرعة كبيرة.'],
+   ['La tortuga camina despacio, paso a paso.','تمشي السلحفاة ببطء، خطوة خطوة.'],
+   ['La liebre mira atrás: la tortuga está muy lejos.','ينظر الأرنب خلفه: السلحفاة بعيدة جداً.'],
+   ['—Tengo tiempo para dormir —piensa la liebre.','«لديّ وقت للنوم» — يفكر الأرنب.'],
+   ['La liebre duerme bajo un árbol.','ينام الأرنب تحت شجرة.'],
+   ['La tortuga camina y camina, sin parar.','تمشي السلحفاة وتمشي، دون توقف.'],
+   ['La tortuga pasa a la liebre dormida.','تتجاوز السلحفاة الأرنب النائم.'],
+   ['La liebre despierta y corre, pero es tarde.','يستيقظ الأرنب ويركض، لكن الوقت متأخر.'],
+   ['¡La tortuga gana la carrera!','السلحفاة تفوز بالسباق!'],
+   ['Despacio pero constante, se gana la carrera.','ببطء ولكن بثبات، يُكسب السباق.']]},
+ {lvl:'A2 — ما قبل المتوسط',title:'La gallina de los huevos de oro — الدجاجة والبيض الذهبي',
+  paras:[
+   ['Hace muchos años, en un pequeño pueblo del campo, vivía un granjero pobre con su esposa. Trabajaban de sol a sol, pero apenas tenían dinero para comer. Su única riqueza era una gallina blanca que vivía en el corral.',
+    'قبل سنوات كثيرة، في قرية صغيرة في الريف، عاش مزارع فقير مع زوجته. كانا يعملان من شروق الشمس حتى غروبها، وبالكاد يملكان ثمن الطعام. ثروتهما الوحيدة كانت دجاجة بيضاء تعيش في الحظيرة.'],
+   ['Una mañana, el granjero fue al corral y encontró algo increíble en el nido: un huevo brillante, pesado y completamente de oro. Al principio pensó que era una broma de algún vecino, pero cuando lo llevó al mercado, el joyero le confirmó que era oro puro.',
+    'ذات صباح، ذهب المزارع إلى الحظيرة فوجد في العش شيئاً لا يُصدَّق: بيضة لامعة ثقيلة من ذهب خالص. ظنّها في البداية مزحة من أحد الجيران، لكن حين حملها إلى السوق، أكّد له الصائغ أنها ذهب صافٍ.'],
+   ['Desde aquel día, la gallina puso un huevo de oro cada mañana. El granjero vendió los huevos, compró tierras y animales, y poco a poco se convirtió en el hombre más rico del pueblo. Pero con la riqueza llegó también la avaricia: cada noche dormía peor, pensando en todo el oro que esperaba dentro de la gallina.',
+    'ومنذ ذلك اليوم، صارت الدجاجة تضع بيضة ذهبية كل صباح. باع المزارع البيض، واشترى أراضيَ ومواشيَ، وشيئاً فشيئاً أصبح أغنى رجل في القرية. لكن مع الثراء جاء الطمع: صار نومه يسوء كل ليلة وهو يفكر في الذهب الذي ينتظر داخل الدجاجة.'],
+   ['«¿Por qué esperar un huevo cada día?», se preguntó una noche. «Dentro de la gallina debe haber un tesoro enorme». Así que tomó un cuchillo, mató a la pobre gallina y la abrió con manos temblorosas. Dentro no encontró nada: era una gallina como todas las demás.',
+    '«لماذا أنتظر بيضة واحدة كل يوم؟» — تساءل ذات ليلة. «لا بد أن داخل الدجاجة كنزاً هائلاً». فأخذ سكيناً، وذبح الدجاجة المسكينة وفتحها بيدين مرتجفتين. لم يجد في داخلها شيئاً: كانت دجاجة كسائر الدجاج.'],
+   ['El granjero perdió su gallina, sus huevos y su fortuna en una sola noche. Desde entonces, en los pueblos de España y de América se repite el mismo consejo a los impacientes: la avaricia rompe el saco.',
+    'خسر المزارع دجاجته وبيضها وثروته في ليلة واحدة. ومنذ ذلك الحين، يتردّد في قرى إسبانيا وأمريكا النصح ذاته لكل عجول طمّاع: الطمع يمزّق الكيس.']]},
+ {lvl:'B1 — متوسط',title:'El pastor y el lobo — الراعي والذئب',
+  paras:[
+   ['Había una vez un joven pastor que cuidaba un rebaño de ovejas en las colinas, cerca de un pequeño pueblo. Su trabajo era tranquilo: las ovejas comían hierba todo el día y él solo tenía que vigilarlas. Tan tranquilo era el trabajo, que el pastor se moría de aburrimiento.',
+    'كان يا ما كان راعٍ شاب يرعى قطيعاً من الغنم على التلال قرب قرية صغيرة. كان عمله هادئاً: الأغنام ترعى العشب طوال النهار وما عليه إلا مراقبتها. وكان العمل من الهدوء حتى إن الراعي كاد يموت من الملل.'],
+   ['Una tarde, para divertirse un poco, tuvo una idea. Respiró hondo y gritó con todas sus fuerzas: «¡El lobo! ¡Viene el lobo! ¡Va a comerse las ovejas!». Los vecinos del pueblo dejaron sus casas y sus trabajos, y corrieron colina arriba con palos y piedras para salvar al pastor y su rebaño.',
+    'وذات مساء، وطلباً لبعض التسلية، خطرت له فكرة. أخذ نفساً عميقاً وصرخ بكل قوته: «الذئب! الذئب قادم! سيأكل الأغنام!». فترك أهل القرية بيوتهم وأعمالهم، وركضوا صاعدين التلّ بالعصيّ والحجارة لإنقاذ الراعي وقطيعه.'],
+   ['Cuando llegaron, sin aliento, encontraron al pastor riéndose en el suelo. «No hay ningún lobo», dijo entre carcajadas, «solo era una broma». Los vecinos volvieron al pueblo enojados y en silencio. Una semana después, el pastor repitió la misma broma, y otra vez el pueblo entero subió corriendo... y otra vez él se rió de todos.',
+    'وحين وصلوا لاهثين، وجدوا الراعي يتمرّغ ضاحكاً على الأرض. قال بين قهقهاته: «لا يوجد أي ذئب، كانت مجرد مزحة». عاد الأهالي إلى القرية غاضبين صامتين. وبعد أسبوع، كرّر الراعي المزحة نفسها، فصعدت القرية كلها راكضةً من جديد... وضحك عليهم جميعاً مرة أخرى.'],
+   ['Pero una tarde de otoño, un lobo de verdad bajó del bosque y entró en el rebaño. «¡El lobo! ¡Esta vez es verdad! ¡Ayuda, por favor!», gritó el pastor con lágrimas en los ojos. En el pueblo, los vecinos escucharon los gritos, se miraron y movieron la cabeza: «Es otra de sus bromas», dijeron, y nadie subió la colina.',
+    'لكن في مساء خريفي، نزل ذئب حقيقي من الغابة ودخل بين القطيع. صرخ الراعي والدموع في عينيه: «الذئب! هذه المرة حقاً! النجدة أرجوكم!». وفي القرية، سمع الأهالي الصراخ، فتبادلوا النظرات وهزّوا رؤوسهم: «إنها مزحة أخرى من مزحاته» — قالوا، ولم يصعد التلَّ أحد.'],
+   ['Aquella tarde, el lobo se comió muchas ovejas mientras el pastor lloraba sin poder hacer nada. Aprendió, demasiado tarde, la lección más antigua del mundo: nadie cree al mentiroso, ni siquiera cuando dice la verdad.',
+    'في ذلك المساء، أكل الذئب أغناماً كثيرة والراعي يبكي عاجزاً عن فعل شيء. وتعلّم، بعد فوات الأوان، أقدم درس في الدنيا: لا أحد يصدّق الكاذب، حتى حين يقول الحقيقة.']]},
+ {lvl:'B2 — فوق المتوسط',title:'La lechera — بائعة الحليب',
+  paras:[
+   ['Una mañana luminosa de primavera, una joven lechera salió de su casa hacia el mercado, llevando sobre la cabeza un cántaro lleno de leche fresca. Caminaba con paso ligero y elegante y, mientras sus pies avanzaban por el camino, su imaginación empezó a volar mucho más rápido que ellos.',
+    'في صباح ربيعي مشرق، خرجت بائعة حليب شابة من بيتها نحو السوق، حاملةً فوق رأسها جرّةً مليئة بالحليب الطازج. كانت تمشي بخطى خفيفة رشيقة، وبينما تتقدّم قدماها على الطريق، راح خيالها يطير أسرع منهما بكثير.'],
+   ['«Con el dinero de esta leche», pensaba, «compraré una cesta de huevos. De los huevos nacerán cien pollitos y, cuando crezcan, los venderé en la feria. Con ese dinero compraré un cerdito, lo engordaré con castañas y bellotas, y luego lo cambiaré por una vaca... ¡y su ternero!».',
+    '«بثمن هذا الحليب» — كانت تفكر — «سأشتري سلة بيض. من البيض سيفقس مئة كتكوت، وحين تكبر سأبيعها في المهرجان. وبذلك المال سأشتري خنزيراً صغيراً أسمّنه بالكستناء والبلّوط، ثم أبادله ببقرة... ومعها عجلها!».'],
+   ['La lechera ya se veía a sí misma rica y admirada: la joven más próspera de toda la comarca. «Todos los muchachos del pueblo querrán casarse conmigo», soñaba con una sonrisa, «pero yo, orgullosa, les diré que no con un movimiento de cabeza... así».',
+    'ورأت بائعة الحليب نفسها غنيةً معجَباً بها: أكثر شابات الناحية ازدهاراً. حلمت وعلى شفتيها ابتسامة: «سيرغب كل شبان القرية في الزواج مني، أما أنا، شامخةً، فسأقول لهم لا بهزّة من رأسي... هكذا».'],
+   ['Y al decir «así», movió la cabeza de verdad. El cántaro se tambaleó sobre su cabeza, cayó al suelo y se rompió en mil pedazos. La leche blanca corrió por el camino y, con ella, se fueron también los huevos, los pollitos, el cerdo, la vaca y el ternero: toda una fortuna que nunca llegó a existir.',
+    'وحين قالت «هكذا»، هزّت رأسها فعلاً. فترنّحت الجرّة فوق رأسها، وسقطت على الأرض وتحطّمت ألف قطعة. سال الحليب الأبيض على الطريق، ومعه ذهب البيض والكتاكيت والخنزير والبقرة والعجل: ثروة كاملة لم تولد قط.'],
+   ['La joven volvió a casa con las manos vacías y los ojos llenos de lágrimas. Su madre, al escuchar lo ocurrido, la abrazó y le dijo con dulzura: «Hija mía, no cuentes los pollos antes de que nazcan. Los sueños son hermosos, pero solo el presente está de verdad en tus manos».',
+    'عادت الفتاة إلى البيت بيدين فارغتين وعينين مغرورقتين. فلما سمعت أمها ما جرى، احتضنتها وقالت لها بحنان: «يا ابنتي، لا تعدّي الكتاكيت قبل أن تفقس. الأحلام جميلة، لكن الحاضر وحده هو ما تملكينه حقاً».']]},
+ {lvl:'C1 — احترافي',title:'Las tres preguntas — الأسئلة الثلاثة (تولستوي)',
+  paras:[
+   ['Se cuenta que un poderoso emperador llegó a convencerse de que, si conociera la respuesta a tres preguntas, jamás volvería a equivocarse en ningún asunto de la vida: ¿cuál es el momento más oportuno para actuar?, ¿quién es la persona a la que más debo atender?, y ¿cuál es, entre todas las tareas, la más urgente?',
+    'يُحكى أن إمبراطوراً عظيماً بلغ به اليقين أنه لو عرف جواب ثلاثة أسئلة، لما أخطأ بعدها في أمر من أمور الحياة: ما اللحظة الأنسب للفعل؟ ومن الشخص الذي يجب أن أوليه أكبر عنايتي؟ وما، بين المهام جميعاً، أشدّها إلحاحاً؟'],
+   ['Proclamó por todo el imperio que recompensaría generosamente a quien supiera responder. Acudieron sabios de todas las provincias, pero sus respuestas se contradecían entre sí y ninguna logró satisfacerlo. Decidió entonces visitar a un viejo ermitaño, famoso por su sabiduría, que vivía retirado en lo alto de una montaña y solo recibía a gente humilde.',
+    'فأعلن في أرجاء الإمبراطورية أنه سيكافئ بسخاء من يعرف الجواب. فقصده الحكماء من كل الأقاليم، لكن أجوبتهم تناقضت فيما بينها ولم يُقنعه منها شيء. فعزم عندئذٍ على زيارة ناسك عجوز ذائع الحكمة، يعيش معتزلاً في أعلى جبل ولا يستقبل إلا البسطاء من الناس.'],
+   ['Vestido con ropas sencillas, el emperador subió la montaña y encontró al anciano cavando la tierra de su huerto, débil y jadeante. En lugar de hacer sus preguntas de inmediato, el emperador tomó la pala de sus manos y cavó en su lugar durante horas, hasta que el sol comenzó a esconderse detrás de las colinas.',
+    'وبثياب بسيطة، صعد الإمبراطور الجبل فوجد الشيخ يحفر أرض بستانه، واهناً لاهثاً. وبدل أن يطرح أسئلته فوراً، أخذ الإمبراطور المجرفة من يديه وحفر مكانه ساعات، حتى بدأت الشمس تتوارى خلف التلال.'],
+   ['Al anochecer, un desconocido salió corriendo del bosque, con las manos apretadas contra una herida que sangraba. El emperador lo atendió, limpió y vendó la herida, y lo cuidó durante toda la noche. Al amanecer, el hombre lo miró con ojos llenos de vergüenza y confesó: «Yo había jurado matarte por venganza, y tus guardias me hirieron cuando te esperaba en el camino. Tú, sin saberlo, me salvaste la vida. Perdóname».',
+    'وعند حلول الظلام، خرج من الغابة رجل غريب راكضاً، ضاغطاً بيديه على جرح ينزف. فاعتنى به الإمبراطور، ونظّف الجرح وضمّده، وسهر عليه الليل كله. وعند الفجر، نظر إليه الرجل بعينين ملؤهما الخجل واعترف: «كنت قد أقسمت أن أقتلك انتقاماً، فجرحني حرّاسك وأنا أترصّدك على الطريق. وأنت، دون أن تدري، أنقذت حياتي. سامحني».'],
+   ['El emperador, asombrado, comprendió que había ganado un amigo donde antes tenía un enemigo mortal. Antes de partir, repitió sus tres preguntas al ermitaño. El anciano sonrió: «Ya han sido respondidas. Si ayer no te hubieras quedado a cavar mi huerto, aquel hombre te habría atacado en el camino. Y si no hubieras curado su herida, habría muerto sin hacer las paces contigo».',
+    'فأدرك الإمبراطور، مذهولاً، أنه كسب صديقاً حيث كان له عدوّ لدود. وقبل رحيله، أعاد أسئلته الثلاثة على الناسك. فابتسم الشيخ: «لقد أُجيبت بالفعل. فلو لم تبقَ أمس تحفر بستاني، لهاجمك ذلك الرجل على الطريق. ولو لم تداوِ جرحه، لمات دون أن يتصالح معك».'],
+   ['«Recuerda esto siempre: el momento más importante es ahora, porque es el único sobre el que tienes poder. La persona más importante es la que está a tu lado, porque nadie sabe si volverá a encontrarse con otra. Y la tarea más urgente es hacerle el bien, porque solo para eso hemos sido enviados a esta vida».',
+    '«واذكر هذا دائماً: اللحظة الأهم هي الآن، لأنها الوحيدة التي تملك عليها سلطاناً. والشخص الأهم هو من بجانبك، إذ لا يدري أحد إن كان سيلقى غيره. والمهمة الأشد إلحاحاً هي أن تحسن إليه، فلأجل هذا وحده أُرسلنا إلى هذه الحياة».']]}
+];
+
+const STORY_QS=[
+ [ // المستوى 0
+  {q:'¿Dónde duerme el león?',qa:'أين ينام الأسد؟',opts:['En el bosque','En la casa','En el mercado']},
+  {q:'¿Quién corta la red?',qa:'من يقطع الشبكة؟',opts:['El ratón','El cazador','El león']},
+  {q:'¿Qué aprende el león?',qa:'ماذا يتعلم الأسد؟',opts:['Los amigos pequeños pueden ser grandes amigos','Dormir es malo','Los ratones son comida']}
+ ],
+ [ // A1
+  {q:'¿Quién es muy rápida?',qa:'من السريع جداً؟',opts:['La liebre','La tortuga','El árbol']},
+  {q:'¿Qué hace la liebre durante la carrera?',qa:'ماذا يفعل الأرنب أثناء السباق؟',opts:['Duerme bajo un árbol','Come en el mercado','Nada en el río']},
+  {q:'¿Quién gana la carrera?',qa:'من يفوز بالسباق؟',opts:['La tortuga','La liebre','Nadie']}
+ ],
+ [ // A2
+  {q:'¿Qué encontró el granjero en el nido?',qa:'ماذا وجد المزارع في العش؟',opts:['Un huevo de oro','Una moneda','Un pollito']},
+  {q:'¿Por qué mató a la gallina?',qa:'لماذا ذبح الدجاجة؟',opts:['Porque quería todo el oro de una vez','Porque estaba enferma','Porque no ponía huevos']},
+  {q:'¿Qué había dentro de la gallina?',qa:'ماذا كان داخل الدجاجة؟',opts:['Nada de oro','Mucho oro','Cien huevos']}
+ ],
+ [ // B1
+  {q:'¿Por qué gritó el pastor la primera vez?',qa:'لماذا صرخ الراعي أول مرة؟',opts:['Para divertirse','Porque vio un lobo','Porque tenía miedo']},
+  {q:'¿Qué hicieron los vecinos cuando el lobo llegó de verdad?',qa:'ماذا فعل الأهالي حين جاء الذئب حقاً؟',opts:['No lo creyeron','Corrieron a ayudar','Llamaron a la policía']},
+  {q:'¿Cuál es la moraleja de la historia?',qa:'ما عبرة القصة؟',opts:['Nadie cree al mentiroso','Los lobos son peligrosos','Hay que gritar fuerte']}
+ ],
+ [ // B2
+  {q:'¿Qué llevaba la lechera sobre la cabeza?',qa:'ماذا كانت تحمل بائعة الحليب فوق رأسها؟',opts:['Un cántaro de leche','Una cesta de huevos','Un sombrero']},
+  {q:'¿Qué pensaba comprar primero?',qa:'ماذا كانت تنوي شراءه أولاً؟',opts:['Una cesta de huevos','Una vaca','Un cerdo']},
+  {q:'¿Por qué se rompió el cántaro?',qa:'لماذا انكسرت الجرّة؟',opts:['Porque movió la cabeza soñando','Porque se cayó en el mercado','Porque el cerdo lo golpeó']}
+ ],
+ [ // C1
+  {q:'¿Para qué subió el emperador a la montaña?',qa:'لماذا صعد الإمبراطور الجبل؟',opts:['Para consultar a un ermitaño','Para cazar','Para descansar']},
+  {q:'¿Por qué había venido el desconocido?',qa:'لماذا كان الغريب قد جاء؟',opts:['Para matar al emperador por venganza','Para pedir dinero','Para trabajar el huerto']},
+  {q:'Según el ermitaño, ¿cuál es el momento más importante?',qa:'حسب الناسك، ما اللحظة الأهم؟',opts:['Ahora','El pasado','El mañana']}
+ ]
+];
+const ADV={
+ start:{p:[
+  ['Karim vive en la granja de su tío, cerca de las montañas. Una noche, ve una luz verde que cae del cielo y golpea el bosque. La tierra tiembla bajo sus pies.',
+   'يعيش كريم في مزرعة عمّه قرب الجبال. ذات ليلة، يرى ضوءاً أخضر يهوي من السماء ويرتطم بالغابة. تهتزّ الأرض تحت قدميه.'],
+  ['Karim corre hacia el bosque con su linterna. Entre los árboles humeantes encuentra una nave pequeña y, junto a ella, un joven herido de cabello plateado.',
+   'يركض كريم نحو الغابة بمصباحه. بين الأشجار المدخّنة يجد مركبة صغيرة، وبجانبها شابّاً جريحاً بشعر فضّي.']],
+  ch:[['Ayudarlo y esconderlo en el granero','ساعده وأخفه في الحظيرة','hide'],
+      ['Correr al pueblo a buscar al médico','اركض إلى القرية لإحضار الطبيب','doctor']]},
+ hide:{p:[
+  ['Karim lleva al joven al granero y cura sus heridas. —Me llamo Aster —dice el desconocido—. Vengo del planeta Elyon. Mi mundo fue destruido por los Sombra, y ahora ellos vienen hacia la Tierra.',
+   'يحمل كريم الشاب إلى الحظيرة ويداوي جراحه. يقول الغريب: «اسمي أستر. جئت من كوكب إليون. دمّر الظلال عالمي، وهم الآن قادمون نحو الأرض».'],
+  ['—Bajo esta granja duerme el Centinela, un robot gigante que mi padre escondió aquí hace muchos años. Es nuestra única esperanza.',
+   '«تحت هذه المزرعة ينام الحارس، روبوت عملاق أخفاه أبي هنا قبل سنوات طويلة. إنه أملنا الوحيد».']],
+  ch:[['Creer a Aster y bajar al sótano secreto','صدّق أستر وانزل إلى القبو السري','base'],
+      ['Pedir una prueba antes de creer','اطلب دليلاً قبل أن تصدّق','proof']]},
+ doctor:{p:[
+  ['Karim corre al pueblo, pero cuando vuelve con el médico, encuentra soldados extraños de armadura negra registrando el bosque: los Sombra ya están aquí.',
+   'يركض كريم إلى القرية، لكنه حين يعود مع الطبيب، يجد جنوداً غرباء بدروع سوداء يفتّشون الغابة: الظلال وصلوا فعلاً.'],
+  ['El joven herido ha desaparecido. Sobre la nieve solo queda un mensaje: «El granero. Medianoche. Confía en mí».',
+   'اختفى الشاب الجريح. لم يبقَ على الثلج سوى رسالة: «الحظيرة. منتصف الليل. ثِق بي».']],
+  ch:[['Ir al granero a medianoche','اذهب إلى الحظيرة منتصف الليل','midnight'],
+      ['Contarles todo a los soldados','أخبر الجنود بكل شيء','betray']]},
+ midnight:{p:[
+  ['A medianoche, Karim entra en el granero con el corazón acelerado. Aster sale de las sombras. —Sabía que vendrías —dice—. Ven, hay algo bajo esta granja que debes ver.',
+   'في منتصف الليل، يدخل كريم الحظيرة وقلبه يخفق بسرعة. يخرج أستر من الظلال قائلاً: «كنت أعلم أنك ستأتي. تعال، تحت هذه المزرعة شيء يجب أن تراه».']],
+  ch:[['Seguir a Aster','اتبع أستر','base']]},
+ proof:{p:[
+  ['Aster sonríe con tristeza. Levanta la mano y una esfera de luz azul flota sobre su palma: dentro de ella, Karim ve imágenes de un planeta hermoso que arde bajo naves negras.',
+   'يبتسم أستر بحزن. يرفع يده فتطفو فوق كفّه كرة من ضوء أزرق: يرى كريم داخلها صوراً لكوكب جميل يحترق تحت سفن سوداء.'],
+  ['—Esta era mi casa —dice Aster en voz baja—. No dejaré que la Tierra termine igual. Karim siente que la duda desaparece de su corazón.',
+   'يقول أستر بصوت خافت: «كانت هذه داري. لن أدع الأرض تلقى المصير نفسه». يشعر كريم بالشك يتلاشى من قلبه.']],
+  ch:[['Bajar juntos al sótano secreto','انزلا معاً إلى القبو السري','base']]},
+ base:{p:[
+  ['Detrás de un muro falso del establo, una escalera de metal baja hacia la oscuridad. Al fondo, iluminado por luces rojas, duerme un gigante de acero: el Centinela.',
+   'خلف جدار زائف في الإسطبل، يهبط درج معدني نحو الظلام. وفي العمق، تحت أضواء حمراء، ينام عملاق من فولاذ: الحارس.'],
+  ['En ese momento, las alarmas gritan. En el cielo del pueblo aparecen tres naves negras. —No hay tiempo —dice Aster—. Necesito un copiloto.',
+   'في تلك اللحظة، تصرخ أجهزة الإنذار. تظهر في سماء القرية ثلاث سفن سوداء. يقول أستر: «لا وقت لدينا. أحتاج مساعد طيار».']],
+  ch:[['Subir a la cabina con Aster','اصعد إلى القمرة مع أستر','battle'],
+      ['Quedarte para evacuar el pueblo','ابقَ لإجلاء أهل القرية','evacuate']]},
+ battle:{p:[
+  ['El Centinela despierta con un rugido de motores. Aster toma los mandos y Karim controla los escudos. El gigante rompe el techo del sótano y sale volando hacia las naves enemigas.',
+   'يستيقظ الحارس بهدير محركات. يمسك أستر بأذرع القيادة ويتولى كريم الدروع. يخترق العملاق سقف القبو وينطلق محلّقاً نحو سفن العدو.'],
+  ['—¡Escudos al máximo! —grita Aster. Un rayo golpea el brazo del robot. En la pantalla, Karim descubre el punto débil de la nave principal: un reactor azul que brilla bajo su ala.',
+   'يصرخ أستر: «الدروع للحد الأقصى!». يضرب شعاعٌ ذراعَ الروبوت. وعلى الشاشة، يكتشف كريم نقطة ضعف السفينة الرئيسية: مفاعل أزرق يلمع تحت جناحها.']],
+  ch:[['Atacar el reactor ahora','اضرب المفاعل الآن','victory'],
+      ['Proteger primero el pueblo con los escudos','احمِ القرية بالدروع أولاً','shield']]},
+ evacuate:{p:[
+  ['Karim corre al pueblo y despierta a todos: «¡Al refugio de la mina, rápido!». Las familias corren en la noche mientras el cielo se llena de fuego.',
+   'يركض كريم إلى القرية ويوقظ الجميع: «إلى ملجأ المنجم، بسرعة!». تركض العائلات في الليل بينما تمتلئ السماء ناراً.'],
+  ['Desde la colina, Karim ve al Centinela luchar solo contra tres naves. El gigante cae de rodillas: sin copiloto, Aster no puede controlar los escudos.',
+   'من التلة، يرى كريم الحارس يقاتل وحيداً ضد ثلاث سفن. يسقط العملاق على ركبتيه: فبلا مساعد طيار، لا يستطيع أستر التحكم بالدروع.']],
+  ch:[['Correr a la cabina para ayudar','اركض إلى القمرة للمساعدة','rescue'],
+      ['Lanzar una bengala para distraer a las naves','أطلق شعلة لتشتيت السفن','flare']]},
+ victory:{end:'🏆 نهاية النصر',p:[
+  ['El Centinela lanza su puño de acero contra el reactor. Una explosión azul ilumina la noche y la nave principal cae al lago helado. Las otras dos huyen hacia las estrellas.',
+   'يُطلق الحارس قبضته الفولاذية نحو المفاعل. ينير انفجار أزرق الليل وتسقط السفينة الرئيسية في البحيرة المتجمدة. وتهرب السفينتان الأخريان نحو النجوم.'],
+  ['El pueblo está a salvo. Aster mira a Karim y sonríe: —Mi planeta murió, pero hoy tú salvaste el tuyo. Ya no soy el último de Elyon: tengo un hermano en la Tierra.',
+   'القرية بأمان. ينظر أستر إلى كريم مبتسماً: «مات كوكبي، لكنك اليوم أنقذت كوكبك. لم أعد آخر أبناء إليون: صار لي أخ على الأرض».']]},
+ shield:{end:'🕊 نهاية الدرع',p:[
+  ['El Centinela abre sus escudos como alas gigantes sobre el pueblo. Los rayos enemigos golpean una y otra vez, pero ni una sola casa se quema.',
+   'يفتح الحارس دروعه كجناحين عملاقين فوق القرية. تضرب أشعة العدو مرةً بعد مرة، لكن لا يحترق بيت واحد.'],
+  ['Al amanecer, las naves se retiran sin energía. En la plaza, la gente abraza a Karim y a Aster. La guerra no se gana solo con fuego: a veces, un escudo vale más que mil espadas.',
+   'عند الفجر، تنسحب السفن وقد نفدت طاقتها. في الساحة، يعانق الناس كريم وأستر. الحرب لا تُكسب بالنار وحدها: أحياناً، درع واحد يساوي ألف سيف.']]},
+ rescue:{end:'🌅 نهاية الفجر',p:[
+  ['Karim cruza el fuego y sube a la cabina. Con los escudos activos, Aster recupera el control. El Centinela se levanta, atrapa una nave con cada mano y las lanza contra la tercera.',
+   'يعبر كريم النار ويصعد إلى القمرة. ومع تفعيل الدروع، يستعيد أستر السيطرة. ينهض الحارس، ويمسك سفينةً بكل يد، ويقذفهما نحو الثالثة.'],
+  ['Cuando sale el sol, el pueblo entero está en la colina, aplaudiendo al gigante y a sus dos pilotos. —Sin ti, hoy no habría amanecer —dice Aster.',
+   'وحين تشرق الشمس، تقف القرية كلها على التلة تصفّق للعملاق وطيّارَيه. يقول أستر: «لولاك، لما كان لهذا اليوم فجر».']]},
+ flare:{end:'🌾 نهاية التضحية',p:[
+  ['La bengala roja sube al cielo y dos naves la siguen. Aster gana unos segundos preciosos, levanta al Centinela y derriba las naves una a una. Pero el granero arde en el fuego de la batalla.',
+   'ترتفع الشعلة الحمراء إلى السماء فتتبعها سفينتان. يكسب أستر ثوانيَ ثمينة، فينهض بالحارس ويُسقط السفن واحدةً تلو الأخرى. لكن الحظيرة تحترق في نار المعركة.'],
+  ['El pueblo está a salvo, aunque la granja quedó en cenizas. El tío abraza a Karim: —Las casas se reconstruyen, hijo. Los pueblos, no. Hiciste bien.',
+   'نجت القرية، وإن صارت المزرعة رماداً. يعانق العمُّ كريماً: «البيوت تُبنى من جديد يا بني. أما القرى فلا. أحسنت صنعاً».']]},
+ betray:{end:'💀 نهاية الخيانة',p:[
+  ['Karim les cuenta todo a los soldados. Pero bajo los cascos negros no hay rostros humanos, solo luces rojas. «Gracias, terrícola», dice una voz metálica.',
+   'يخبر كريم الجنود بكل شيء. لكن تحت الخوذات السوداء لا وجوه بشرية، بل أضواء حمراء فقط. يقول صوت معدني: «شكراً أيها الأرضي».'],
+  ['Los Sombra encuentran el granero y el Centinela antes de que despierte. Sin su gigante, la Tierra queda indefensa. A veces, confiar en el enemigo es la peor decisión.',
+   'يجد الظلال الحظيرةَ والحارسَ قبل أن يستيقظ. وبلا عملاقها، تبقى الأرض بلا دفاع. أحياناً، الوثوق بالعدو هو أسوأ قرار.']]}
+};
+
+
+let advNode='start', advSteps=0, advEndSeen={};
+let curStory=0, storyPlaying=false;
+function renderStoryLevels(){
+ document.getElementById('storyLevels').innerHTML=STORIES.map((s,i)=>
+  `<button class="${i===curStory?'active':''}" onclick="curStory=${i};stopStory();renderStory()">${s.lvl.split('—')[0].trim()}</button>`).join('')+
+  `<button class="${curStory==='adv'?'active':''}" style="${curStory==='adv'?'':'border-color:var(--saffron)'}" onclick="curStory='adv';advNode='start';advSteps=0;stopStory();renderStory()">🎮 مغامرة تفاعلية</button>`;
+}
+function renderStory(){
+ renderStoryLevels();
+ if(curStory==='adv'){renderAdventure();return;}
+ const st=STORIES[curStory];
+ const isParas=!!st.paras;
+ const body=isParas
+  ? st.paras.map(([es,ar],i)=>
+     `<div class="para" id="sent${i}" onclick="sayLong(this.dataset.es)" data-es="${es.replace(/"/g,'&quot;')}">
+        <p class="es">${es}</p><p class="ar">${ar}</p></div>`).join('')
+  : st.sents.map(([es,ar],i)=>
+     `<div class="sent" id="sent${i}" onclick="say('${es.replace(/'/g,"\\'")}')">
+        <span class="es">${es}</span><span class="ar">${ar}</span></div>`).join('');
+ document.getElementById('storyBox').innerHTML=
+  `<span class="lvl">${st.lvl}</span><h3><span class="es">${st.title.split(' — ')[0]}</span> — ${st.title.split(' — ')[1]||''}</h3>
+   <div class="story-tools">
+     <button class="t-play" onclick="playStory()">▶ شغّل القصة كاملة</button>
+     <button class="t-stop" onclick="stopStory()">⏹ إيقاف</button>
+     <button class="t-ar" onclick="document.getElementById('storyBox').classList.toggle('show-ar')">🔁 أظهر/أخفِ الترجمة</button>
+   </div>`+body+renderStoryQuiz();
+}
+function renderAdventure(){
+ const n=ADV[advNode];
+ const paras=n.p.map(([es,ar],i)=>
+   `<div class="para" id="sent${i}" onclick="sayLong(this.dataset.es)" data-es="${es.replace(/"/g,'&quot;')}">
+      <p class="es">${es}</p><p class="ar">${ar}</p></div>`).join('');
+ let footer='';
+ if(n.end){
+   if(!advEndSeen[advNode]){advEndSeen[advNode]=1;addXP(30);toast('📖 نهاية جديدة! +30 XP');}
+   footer=`<div class="adv-end">${n.end}</div>
+     <div class="adv-choices"><button class="adv-btn" onclick="advNode='start';advSteps=0;stopStory();renderStory()">🔄 العب من جديد — جرّب مساراً آخر</button></div>`;
+ } else {
+   footer=`<div class="cat-head" style="margin-top:20px">⚔️ ¿Qué hace Karim? — ماذا يفعل كريم؟</div>
+     <div class="adv-choices">`+
+     n.ch.map(([es,ar,to])=>
+       `<button class="adv-btn" onclick="advNode='${to}';advSteps++;stopStory();renderStory();document.getElementById('storyBox').scrollIntoView({behavior:'smooth'})">
+          <span class="es">${es}</span><span class="adv-ar">${ar}</span></button>`).join('')+`</div>`;
+ }
+ document.getElementById('storyBox').innerHTML=
+  `<span class="lvl">🎮 مغامرة تفاعلية — B1 · قراراتك تحدد النهاية (5 نهايات)</span>
+   <h3><span class="es">El Centinela</span> — الحارس</h3>
+   <div class="story-tools">
+     <button class="t-play" onclick="playStory()">▶ استمع للمشهد</button>
+     <button class="t-stop" onclick="stopStory()">⏹ إيقاف</button>
+     <button class="t-ar" onclick="document.getElementById('storyBox').classList.toggle('show-ar')">🔁 أظهر/أخفِ الترجمة</button>
+     <span class="adv-step">المشهد ${advSteps+1}</span>
+   </div>`+paras+footer;
+}
+function renderStoryQuiz(){
+ const qs=STORY_QS[curStory]; if(!qs) return '';
+ return `<div class="cat-head" style="margin-top:26px">✅ أسئلة الفهم — Preguntas de comprensión</div>`+
+  qs.map((item,qi)=>{
+   const correct=item.opts[0];
+   const shuffled=[...item.opts].sort(()=>Math.random()-0.5);
+   return `<div class="sq-box">
+     <div class="sq-q" onclick="say('${item.q.replace(/'/g,"\\'")}')"><span class="es">${item.q}</span> 🔊
+       <div class="sq-qa">${item.qa}</div></div>
+     <div class="sq-opts">`+
+     shuffled.map(o=>`<button onclick="answerStoryQ(this,${o===correct})"><span class="es">${o}</span></button>`).join('')+
+    `</div><div class="sq-result"></div></div>`;
+  }).join('');
+}
+function answerStoryQ(btn,good){
+ btn.classList.add(good?'good':'bad');
+ const res=btn.parentElement.nextElementSibling;
+ if(good){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.disabled=true);
+  res.textContent='✓ ¡Correcto! أحسنت (+10 XP)';res.style.color='var(--ok)';addXP(10);
+ } else {btn.disabled=true;res.textContent='✗ حاول مرة أخرى — أعد قراءة القصة';res.style.color='var(--terra)'}
+}
+function playStory(){
+ stopStory();storyPlaying=true;
+ const items = curStory==='adv' ? ADV[advNode].p : (STORIES[curStory].paras||STORIES[curStory].sents);
+ let i=0;
+ function next(){
+  if(!storyPlaying||i>=items.length){storyPlaying=false;return}
+  document.querySelectorAll('.sent,.para').forEach(el=>el.style.background='');
+  const el=document.getElementById('sent'+i);
+  if(el){el.style.background='#FFF3D6';el.scrollIntoView({block:'center',behavior:'smooth'})}
+  const h=sayLong(items[i][0]);
+  h.onend=()=>{i++;setTimeout(next,550)};
+ }
+ next();
+}
+function stopStory(){storyPlaying=false;stopAll();document.querySelectorAll('.sent,.para').forEach(el=>el.style.background='')}
+renderStory();
+</script>
+</body>
+</html>
